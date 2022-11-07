@@ -8,48 +8,61 @@ import ModalAddWork from "../Modal/ModalAddWork";
 import ModalQuickEntry from "../Modal/ModalQuickEntry";
 import ModalArea from "../Modal/ModalAddArea"
 
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
+// helper
+import { dateFormat } from "../../helper/handleDate";
+import { fungsiShowObjective } from "../../store/actionCreator";
+
 export default function CardPageVisits() {
+  const dispatch = useDispatch()
+  const areas = useSelector(state => state.AreaReducer)
+  const students = useSelector(state => state.StudentReducer)
+  const shoTypeTable = useSelector(state => state.UserReducer.cardPageVisit)
 
-  const [workOrStudent, setWorkOrStudent] = useState(1)
+  const [selectObjectives, setSelectObjective] = useState(0)
+  const [dataStudent, setDataStudent] = useState([])
+  const [dataWorks, setWorks] = useState([])
 
-  const [dataStudent, setDataStudent] = useState([
-    {
-        id: 1,
-        name : "First Name",
+  useEffect(()=>{
+    let setStudent = []
+    
+    students.studentData.forEach((e, i) => {
+      let temp = {
+        id : e.id,
+        name : e.firstName,
         progress : "",
-        lastUpdate : new Date().toISOString().slice(0, 10)
-    }
-  ])
+        lastUpdate : dateFormat(e.updatedAt)
+      }
+      setStudent.push(temp)
+    });
+    setDataStudent(setStudent)
 
-  const [dataWorks, setWorks] = useState([
-    {
-      id : 1,
-      name : "Dry Exploration",
-      progress : "",
-      lastUpdate : new Date().toISOString().slice(0, 10)
-    },
-    {
-      id: 2,
-      name : "Dry Transfer",
-      progress : "",
-      lastUpdate : new Date().toISOString().slice(0, 10)
-    },
-    {
-      id: 3,
-      name : "Dry Dumping",
-      progress : "",
-      lastUpdate : new Date().toISOString().slice(0, 10)
-    },
-    {
-      id: 4,
-      name : "Dry Pouring",
-      progress : "",
-      lastUpdate : new Date().toISOString().slice(0, 10)
-    },
-  ])
+  }, [])
 
+  useEffect(()=>{
+    let setArea = []
+    
+    areas.areaData[areas.selectArea].Objectives.forEach((e, i) => {
+      let temp = {
+        id : e.id,
+        name : e.name,
+        progress : "",
+        lastUpdate : dateFormat(e.updatedAt)
+      }
+      setArea.push(temp)
+    });
+    setWorks(setArea)
 
+  }, [setWorks, areas.areaData[areas.selectArea].Objectives])
 
+  function handleObjectiveShow(event) {
+    let selectObjective = event.target.value
+    dispatch(fungsiShowObjective(+selectObjective))
+  }
+  
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-sky-50 w-full mb-6 shadow-lg rounded">
@@ -57,13 +70,16 @@ export default function CardPageVisits() {
           <div className="flex-col items-center">
             <div className="flex relative w-full justify-between px-4 max-w-full">
               <h3 className="font-semibold text-base text-blueGray-700">
-                First Student
+                {students.studentData[students.selectStudent].firstName}
               </h3>
-              <select name="cars" id="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+              <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={handleObjectiveShow} name="" id="">
+                {
+                  areas.areaData.map((e, i) => {
+                    return (
+                      <option key={i} value={i}>{e.name}</option>
+                    )
+                  })
+                }
               </select> 
             </div>
             <div className="flex relative w-full justify-start px-4 max-w-full mt-2">
@@ -82,10 +98,10 @@ export default function CardPageVisits() {
         <div className="block w-full overflow-x-auto">
           {/* Projects table */}
           {
-            workOrStudent === 1 ? (
-              <Table data={dataWorks} showTypeTable={workOrStudent}/>
+            shoTypeTable === 1 ? (
+              <Table data={dataWorks} showTypeTable={shoTypeTable} />
             ) : (
-              <Table data={dataStudent} showTypeTable={workOrStudent} />
+              <Table data={dataStudent} showTypeTable={shoTypeTable} />
             )
           }
         </div>

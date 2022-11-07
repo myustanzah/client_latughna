@@ -90,6 +90,78 @@ export default function Modal() {
                                         <input type="checkbox" defaultChecked={"true"} />
                                     </td>
                                 </tr>
+                                <tr class="border-b">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">AM Session</td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Lunch</td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PM Session</td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PM Care</td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" defaultChecked={"true"} />
+                                    </td>
+                                </tr>
                             </tbody>
                             </table>
                         </div>

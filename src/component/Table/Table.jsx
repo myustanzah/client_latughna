@@ -12,7 +12,9 @@ export default function Table(props){
                             Hide
                         </th>
                     ) : (
+                      <th>
                         <></>
+                      </th>
                     )
                 }
                 {
@@ -50,9 +52,7 @@ export default function Table(props){
                                             x
                                         </button>
                                     ) : (
-                                        <button className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-4" type="button">
-                                        
-                                        </button>
+                                        <></>
                                     )
                                 }
                             </td>
@@ -60,7 +60,7 @@ export default function Table(props){
                               {e.name}
                             </td>
                             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                              <div className="flex flex-nowrap">
+                              <div className="flex flex-nowrap justify-between">
                                 <input type="checkbox" class="appearance-none checked:bg-blue-500" />
                                 <input type="checkbox" class="appearance-none checked:bg-blue-500" />
                                 <input type="checkbox" class="appearance-none checked:bg-blue-500" />

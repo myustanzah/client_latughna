@@ -1,24 +1,31 @@
 import React,  { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+// api
+import { login } from "../../api/userController";
 
 // component
 import Footer from "../../component/Footer/Footer";
 
-// views
+// helper
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
 
-// asset
-import { useNavigate } from "react-router-dom";
+// redux
+import { fungsiDataUser, fungsiLogin, fungsiStoreArea, fungsiStoreStudent } from "../../store/actionCreator";
+
+
 
 export default function Login() {
-  //Route Guard Belum jalan
+  
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [user, setUser] = useState({
         email: "",
         password: ""
     })
-
-    const [login, setLoggedIn] = useState(false)
-
+    
     const handleUserLogin = (event) => {
         const newName = event.target.name;
         const newValue = event.target.value;
@@ -26,32 +33,42 @@ export default function Login() {
             ...user,
             [newName]: newValue
         })
-        setLoggedIn(true)
         
     }
-
+    
     const submitLogin = (event) => {
-        event.preventDefault()
-        if (user.email !== "") {
-          navigate("/admin/dashboard")
-        }
-        console.log(user, login)
+      event.preventDefault()
+
+      login(user)
+          .then((response)=>{
+            // console.log(JSON.stringify(response.data.content.data.Students))
+            dispatch(fungsiDataUser(response.data))
+            dispatch(fungsiLogin(true))
+            dispatch(fungsiStoreStudent(response.data.content.data.Students))
+            dispatch(fungsiStoreArea(response.data.content.data.Areas))
+            UniversalSuccessResponse("Login Success", "enjoy your web")
+            navigate("/admin/dashboard")
+          })
+          .catch((error)=>{
+            UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+          })
+
     }
 
     return ( 
         <section className="h-screen">
         <div className="px-6 h-5/6 text-gray-800">
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6" >
-            <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0" >
+            <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 md:mb-0 border-r border-black" >
               <img
-                src={require("../../assets/Webinar-amico.png")}
-                className="w-9/12"
+                src={require("../../assets/login.png")}
+                className="w-9/12 m-auto"
                 alt=""
               />
             </div>
-            <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+            <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 ">
               <form id="formLogin" onSubmit={submitLogin}>
-                <div className="flex flex-row items-center justify-center lg:justify-start">
+                {/* <div className="flex flex-row items-center justify-center lg:justify-start">
                   <p className="text-lg mb-0 mr-4">Sign in with</p>
                   <button
                     type="button"
@@ -97,12 +114,12 @@ export default function Login() {
                       />
                     </svg>
                   </button>
-                </div>
+                </div> */}
       
                 <div
                   className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
                 >
-                  <p className="text-center font-semibold mx-4 mb-0">Or</p>
+                  <p className="text-center font-semibold mx-4 mb-0">Sign In</p>
                 </div>
       
                 
@@ -150,14 +167,14 @@ export default function Login() {
                   >
                     Login
                   </button>
-                  <p className="text-sm font-semibold mt-2 pt-1 mb-0">
+                  {/* <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                     Don't have an account?
                     <a
                       href="#!"
                       className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
                       >Register</a
                     >
-                  </p>
+                  </p> */}
                 </div>
               </form>
             </div>

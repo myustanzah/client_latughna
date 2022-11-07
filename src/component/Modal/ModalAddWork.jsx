@@ -10,7 +10,7 @@ export default function Modal() {
         type="button"
         onClick={() => setShowModal(true)}
       >
-        + Add Work
+        + Add Objective
       </button>
       {showModal ? (
         <>
@@ -24,7 +24,7 @@ export default function Modal() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    Add Work
+                    Add Objective
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -39,7 +39,7 @@ export default function Modal() {
                 
                 <div className="relative p-6 flex-auto">
                 <div class="mb-3 pt-0">
-                    <label className="mb-4">Add Works </label><br />
+                    <label className="mb-4">Add Objective </label><br />
                     <input type="text" onClick={e => e.preventDefault()} placeholder="" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                 </div>
                   {/* <p className="my-4 text-blueGray-500 text-lg leading-relaxed">

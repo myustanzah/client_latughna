@@ -1,11 +1,20 @@
 /*eslint-disable*/
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-// import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
-// import UserDropdown from "components/Dropdowns/UserDropdown.js";
+import { useDispatch } from "react-redux";
+import { fungsiLogOut } from "../../store/actionCreator";
 
 export default function Sidebar() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+
+  const handleLogout = () => {
+    dispatch(fungsiLogOut(false))
+    navigate("/auth")
+  }
+
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <>
@@ -91,7 +100,7 @@ export default function Sidebar() {
                 >
                   <i className={"fas fa-tv mr-2 text-sm "}
                   ></i>{" "}
-                  Workspace
+                  Learning Objective
                 </Link>
               </li>
 
@@ -164,7 +173,7 @@ export default function Sidebar() {
               </li>
             </ul>
             <Link to="/auth">
-              <button type="button" class="absolute bottom-0 mb-2 w-full inline-block px-6 py-2.5 bg-cyan-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+              <button type="button" onClick={handleLogout} class="absolute bottom-0 mb-2 w-full inline-block px-6 py-2.5 bg-cyan-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                     Log Out
               </button>
             </Link>

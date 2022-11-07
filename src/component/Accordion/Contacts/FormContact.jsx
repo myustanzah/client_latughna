@@ -173,7 +173,7 @@ export default function FormContact(){
                                 <tr>
                                     <td></td>
                                     <td>
-                                    <tr>
+                                        <tr>
                                             <td className="w-3/12">
                                                 <input type="checkbox" />
                                             </td>

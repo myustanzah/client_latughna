@@ -1,11 +1,21 @@
 import React, {useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { fungsiShowDataStudentOrObjective } from "../../store/actionCreator";
 
 // Modal
 import ModalAddStudent from "../Modal/ModalAddStudent";
 
 const Tabs = () => {
-  const [openTab, setOpenTab] = useState(1);
+  
+  const shoTypeTable = useSelector(state => state.UserReducer.cardPageVisit)
+  const students = useSelector(state => state.StudentReducer.studentData)
+  const areas = useSelector(state => state.AreaReducer)
+  const dispatch = useDispatch()
+
+  function hanleOpenTab(value) {
+    dispatch(fungsiShowDataStudentOrObjective(value))
+  };
   
   return (
     <>
@@ -15,13 +25,13 @@ const Tabs = () => {
             <li className="mr-1 last:mr-0 flex-auto text-center">
               <a
                 className={ "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
-                  (openTab === 1
+                  (shoTypeTable === 1
                     ? "text-white bg-green-600"
                     : "text-green-600 bg-white")
                 }
                 onClick={e => {
                   e.preventDefault();
-                  setOpenTab(1);
+                  hanleOpenTab(1);
                 }}
                 data-toggle="tab"
                 href={"#link1"}
@@ -31,52 +41,57 @@ const Tabs = () => {
             </li>
             <li className="mr-1 last:mr-0 flex-auto text-center">
               <a className={"text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
-                  (openTab === 2
+                  (shoTypeTable === 2
                     ? "text-white bg-green-600"
                     : "text-bg-green-600 bg-white")
                 }
                 onClick={e => {
                   e.preventDefault();
-                  setOpenTab(2);
+                  hanleOpenTab(2);
                 }}
                 data-toggle="tab"
                 href="#link2"
                 role="tablist"
               >
-                Works
+                Objective
               </a>
             </li>
           </ul>
             {
-                openTab === 1 ? (
+                shoTypeTable === 1 ? (
                     <ModalAddStudent />
                 ) : (<></>)
             }
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-1 shadow-lg rounded">
             <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
-                <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                    Student 1
-                </button>
-                <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                    Student 2
-                </button>
-                <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                    Student 3
-                </button>
+
+                <div className={shoTypeTable === 1 ? "block" : "hidden"} id="link1">
+
+                  {
+                    students.map((e, i) => {
+                      return (
+                          <button key={i} class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
+                              {e.firstName}
+                          </button>
+                      )
+                    })
+                  }
+      
                 </div>
-                <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border border-b-violet-700 hover:border-transparent">
-                    Works 1
-                </button>
-                <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border border-b-violet-700 hover:border-transparent">
-                    Works 1
-                </button>
-                <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border border-b-violet-700 hover:border-transparent">
-                    Works 3
-                </button>
+
+                <div className={shoTypeTable === 2 ? "block" : "hidden"} id="link2">
+                  {
+                    areas.areaData[areas.selectArea].Objectives.map((e, i) => {
+                      return (
+                        <button key={i} class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
+                            {e.name}
+                        </button>
+                      )
+                    })
+                  }
                 </div>
+
               </div>
             </div>
           </div>

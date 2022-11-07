@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -22,8 +23,7 @@ import LessonPlan from './views/admin/LessonPlan';
 
 
 function App() {
-
-  const [routeGuard, setRouteGuard] = useState(true)
+  const routeGuard = useSelector((state) => state.UserReducer.isLoggedIn)
 
   return (
     <>
