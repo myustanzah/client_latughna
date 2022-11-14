@@ -19,9 +19,9 @@ export default function Modal() {
         <>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            onClick={() => setShowModal(false)}
+            
           >
-            <div className="relative w-auto my-6 mx-auto max-w-6xl">
+            <div className="relative w-full my-6 mx-auto max-w-6xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -39,26 +39,59 @@ export default function Modal() {
                   </button>
                 </div>
                 {/*body*/}
-                
-                <div className="relative p-6 flex-auto">
-                <div class="mb-3 pt-0">
-                    <label className="mb-4">Updates for(MM/DD/YY) </label>
-                    <input type="date" value={handleNewDate()} class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
-                    <div>
+
+                <table className="m-10 table-auto">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <label >Updates for(MM/DD/YY) </label>
+                      </td>
+                      <td>
+                        <input type="date" value={handleNewDate()} class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
                         <label className="mb-4 mr-9">Students </label>
+                      </td>
+                      <td>
                         <textarea class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
-                    </div>
-                    <label className="mb-4 mr-14">Works </label>
-                    <input type="text" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <label className="mb-4 mr-14">Objective </label>
+                        </td>
+                        <td>
+                          <input type="text" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        </td>
+                    </tr>
+                    
                     <hr className="my-11" />
-                    <label className="mb-4 mr-9">Progress </label>
-                    <input type="text" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
-                    <div>
-                        <label className="mb-4 mr-5">Comments </label>
-                        <textarea class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
-                    </div>
+                    
+                    <tr>
+                      <td>
+                        <label className="mb-4 mr-9">Progress </label>
+                      </td>
+                      <td>
+                        <input type="text" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <label className="mb-4 mr-5">Comments </label>
+                        </td>
+                        <td>
+                          <textarea class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+           
+                    
+                   
                     <hr />
-                    <div className="flex flex-row justify-between mt-4">
+                    {/* <div className="flex flex-row justify-between mt-4">
                         <label className="mr-4">Lesson Plan</label>
                         <div className="flex flex-row">
                             <div className="mr-2">
@@ -74,9 +107,8 @@ export default function Modal() {
                                 <label>Remove</label>
                             </div>
                         </div>
-                    </div>
-                </div>
-                </div>
+                    </div> */}
+               
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button

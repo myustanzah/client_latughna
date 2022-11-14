@@ -3,14 +3,19 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { fungsiLogOut } from "../../store/actionCreator";
+import { fungsiGetDataObservation, fungsiLogOut } from "../../store/actionCreator";
 
 export default function Sidebar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  function setDataObservation(){
+    dispatch(fungsiGetDataObservation())
+  }
+
 
   const handleLogout = () => {
+    localStorage.removeItem("token")
     dispatch(fungsiLogOut(false))
     navigate("/auth")
   }
@@ -108,6 +113,7 @@ export default function Sidebar() {
                 <Link
                   className={"text-xs uppercase py-3 font-bold block "}
                   to="/admin/observation"
+                  onClick={setDataObservation}
                 >
                   <i className={"fas fa-solid fa-tower-observation mr-2 text-sm"}
                   ></i>{" "}

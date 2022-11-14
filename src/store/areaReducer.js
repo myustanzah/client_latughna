@@ -1,8 +1,9 @@
-import { SET_AREA, SET_OBJECTIVE_AREA } from "./actionType";
+import { SET_AREA, SET_OBJECTIVE_AREA, SET_SELECT_OBJECTIVE } from "./actionType";
 
 const initialState = {
     areaData: [],
-    selectArea: 0
+    selectArea: 0,
+    selectObjective: 0
 }
 
 function areaReducer(state = initialState, action){
@@ -11,6 +12,8 @@ function areaReducer(state = initialState, action){
             return {...state, areaData: action.payload}
         case SET_OBJECTIVE_AREA:
             return {...state, selectArea: action.payload}
+        case SET_SELECT_OBJECTIVE:
+            return {...state, selectObjective: action.payload}
         default:
             break;
     }

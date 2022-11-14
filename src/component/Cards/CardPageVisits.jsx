@@ -6,6 +6,7 @@ import Table from "../Table/Table";
 // modal
 import ModalAddWork from "../Modal/ModalAddWork";
 import ModalQuickEntry from "../Modal/ModalQuickEntry";
+import ModalOrganizeArea from "../Modal/ModalOrganizeArea";
 import ModalArea from "../Modal/ModalAddArea"
 
 // redux
@@ -49,7 +50,10 @@ export default function CardPageVisits() {
       let temp = {
         id : e.id,
         name : e.name,
-        progress : "",
+        progresA : e.progresA,
+        progresB : e.progresB,
+        progresC : e.progresC,
+        hide: e.hide,
         lastUpdate : dateFormat(e.updatedAt)
       }
       setArea.push(temp)
@@ -75,22 +79,19 @@ export default function CardPageVisits() {
               <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={handleObjectiveShow} name="" id="">
                 {
                   areas.areaData.map((e, i) => {
-                    return (
-                      <option key={i} value={i}>{e.name}</option>
-                    )
+                    if (e.hide === false) {
+                      return(
+                          <option key={i} value={i}>{e.name}</option>
+                        ) 
+                    }
                   })
                 }
               </select> 
             </div>
             <div className="flex relative w-full justify-start px-4 max-w-full mt-2">
               <ModalAddWork />
-              <ModalQuickEntry />
-              <button
-                className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-              >
-              Organize Areas
-              </button>
+              {/* <ModalQuickEntry /> */}
+              <ModalOrganizeArea />
               <ModalArea />
             </div>
           </div>

@@ -6,8 +6,19 @@ import Sidebar from "../component/Sidebar/Sidebar"
 import HeaderStats from "../component/Header/Headerstat"
 import AdminNavbar from "../component/Navbar/AdminNavbar"
 import FooterAdmin from "../component/Footer/FooterAdmin"
+import { useDispatch, useSelector } from "react-redux"
+import { fungsiIndexArea, fungsiIndexStudent } from "../store/actionCreator"
+import { useEffect } from "react"
+import Loading from "../component/Modal/Loading"
 
 export default function Workspace(){
+    const dispatch = useDispatch()
+    const loading = useSelector(state => state.UserReducer.isLoading)
+    
+    useEffect(()=>{
+        dispatch(fungsiIndexArea())
+        dispatch(fungsiIndexStudent())
+    }, [])
 
     return (
         <>

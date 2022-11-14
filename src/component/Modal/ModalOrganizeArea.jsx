@@ -1,7 +1,41 @@
 import React, {useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateHideArea } from "../../api/areaController";
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
+import { fungsiIndexArea } from "../../store/actionCreator";
 
-export default function ModalDeleteStudent() {
+
+export default function Modal() {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
+  const area = useSelector(state => state.AreaReducer.areaData)
+
+
+  function submitHideArea(e, id){
+    
+    let payload = {
+        id: id,
+        status: e
+    }
+    updateHideArea(payload)
+    .then((response)=>{
+
+        if(response.data.status === 200){
+            UniversalSuccessResponse("Success", "Area berhasil diupdate")
+            dispatch(fungsiIndexArea())
+            // setShowModal(false)
+          } else {
+            UniversalErrorResponse("Error", JSON.stringify(response.data))
+          }
+    })
+    .catch((error)=>{
+        if (error.response === undefined) {
+            UniversalErrorResponse(503, "Your interner or server has offline")
+          }
+          UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    })
+    
+  }
     
   return (
     <>
@@ -10,13 +44,12 @@ export default function ModalDeleteStudent() {
         type="button"
         onClick={() => setShowModal(true)}
       >
-        - Delete This Student
+        Organize Area
       </button>
       {showModal ? (
         <>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            
           >
             <div className="relative w-auto my-6 mx-auto max-w-6xl">
               {/*content*/}
@@ -24,7 +57,7 @@ export default function ModalDeleteStudent() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                  Delete This Student
+                    Organize Area
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -36,15 +69,32 @@ export default function ModalDeleteStudent() {
                   </button>
                 </div>
                 {/*body*/}
-                
-                <div className="relative p-6 flex-auto">
 
-                  <p>Warning - This student and all associated history will soon be deleted permanently. 
-                    Are you sure you want to do this? <br />
-                    <i>Deleted students can be restored for up to 30 days after deletion </i>
-                  </p>
+                    <table className="m-5">
+                        {
+                            area.map((e, i) => {
+                                return (
+                                    <tbody key={e.id}>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" 
+                                                onClick={(event) => {
+                                                    let value = event.target.value
+                                                    submitHideArea(value, e.id) 
+                                                }}
+                                                value={e.hide === false ? true : false}
+                                                defaultChecked={e.hide === false ? true : false} />
+                                            </td>
+                                            <td>
+                                                {e.name}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                )
+                            })
+                        }
+                    </table>
 
-                </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
@@ -54,13 +104,13 @@ export default function ModalDeleteStudent() {
                   >
                     Close
                   </button>
-                  <button
+                  {/* <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
                     Save Changes
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

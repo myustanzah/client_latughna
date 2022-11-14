@@ -1,7 +1,8 @@
 import React, {useState} from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fungsiShowDataStudentOrObjective } from "../../store/actionCreator";
+import { fungsiIndexArea, fungsiIndexStudent, fungsiSelectObjective, fungsiSelectStudent, fungsiShowDataStudentOrObjective } from "../../store/actionCreator";
 
 // Modal
 import ModalAddStudent from "../Modal/ModalAddStudent";
@@ -10,12 +11,22 @@ const Tabs = () => {
   
   const shoTypeTable = useSelector(state => state.UserReducer.cardPageVisit)
   const students = useSelector(state => state.StudentReducer.studentData)
+  const selectStudents = useSelector(state => state.StudentReducer.selectStudent)
   const areas = useSelector(state => state.AreaReducer)
   const dispatch = useDispatch()
+
 
   function hanleOpenTab(value) {
     dispatch(fungsiShowDataStudentOrObjective(value))
   };
+
+  function handleSelectStudent(value) {
+    dispatch(fungsiSelectStudent(value))
+  }
+
+  function handleSelectObjective(value){
+    dispatch(fungsiSelectObjective(value))
+  }
   
   return (
     <>
@@ -71,8 +82,13 @@ const Tabs = () => {
                   {
                     students.map((e, i) => {
                       return (
-                          <button key={i} class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                              {e.firstName}
+                          <button 
+                                key={i} 
+                                onClick={()=> handleSelectStudent(i)} 
+                                className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
+                                (selectStudents === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
+                                }>
+                                {e.firstName}
                           </button>
                       )
                     })
@@ -83,11 +99,17 @@ const Tabs = () => {
                 <div className={shoTypeTable === 2 ? "block" : "hidden"} id="link2">
                   {
                     areas.areaData[areas.selectArea].Objectives.map((e, i) => {
-                      return (
-                        <button key={i} class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                            {e.name}
-                        </button>
-                      )
+                      if(e.hide === false){
+                        return (
+                          <button key={i}
+                                  onClick={ ()=> handleSelectObjective(i)}
+                                  className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
+                                  (areas.selectObjective === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
+                                  }>
+                              {e.name}
+                          </button>
+                        )
+                      }
                     })
                   }
                 </div>

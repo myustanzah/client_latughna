@@ -7,12 +7,13 @@ import { login } from "../../api/userController";
 
 // component
 import Footer from "../../component/Footer/Footer";
+import Loading from "../../component/Modal/Loading";
 
 // helper
 import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
 
 // redux
-import { fungsiDataUser, fungsiLogin, fungsiStoreArea, fungsiStoreStudent } from "../../store/actionCreator";
+import { fungsiDataUser, fungsiLogin } from "../../store/actionCreator";
 
 
 
@@ -20,6 +21,7 @@ export default function Login() {
   
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     const [user, setUser] = useState({
         email: "",
@@ -38,24 +40,35 @@ export default function Login() {
     
     const submitLogin = (event) => {
       event.preventDefault()
+      setLoading(true);
 
       login(user)
           .then((response)=>{
-            // console.log(JSON.stringify(response.data.content.data.Students))
             dispatch(fungsiDataUser(response.data))
+            localStorage.setItem("token", response.data.content.token)
             dispatch(fungsiLogin(true))
-            dispatch(fungsiStoreStudent(response.data.content.data.Students))
-            dispatch(fungsiStoreArea(response.data.content.data.Areas))
-            UniversalSuccessResponse("Login Success", "enjoy your web")
-            navigate("/admin/dashboard")
+            if(loading === false){
+              UniversalSuccessResponse("Login Success", "enjoy your web")
+              navigate("/admin/welcome")
+            }
           })
           .catch((error)=>{
+            if (error.response === undefined) {
+              UniversalErrorResponse(503, "Your interner or server has offline")
+            }
             UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+          })
+          .finally(()=>{
+              setTimeout(() => {
+                  setLoading(false);
+              }, 2000);
           })
 
     }
 
     return ( 
+
+     
         <section className="h-screen">
         <div className="px-6 h-5/6 text-gray-800">
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6" >
@@ -180,6 +193,13 @@ export default function Login() {
             </div>
           </div>
         </div>
+        {
+          loading ? (
+            <Loading />
+          ) : (
+            <></>
+          )
+        }
         <Footer />
       </section>
      );

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useState } from "react";
 
 // Components
 import Filter from "../../Filter/Filter";
@@ -8,42 +9,99 @@ import AddFormMurid from "../../component/Tab/AddFormMurid";
 
 // Table
 import TableObservations from "../../component/Table/TableObservations";
+import { addObservation } from "../../api/observationController";
+import { useDispatch, useSelector } from "react-redux";
+import { fungsiGetDataObservation, fungsiUpdateData } from "../../store/actionCreator";
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
+import Loading from "../../component/Modal/Loading"
 
 
 export default function Observation(){
+
+    const fileUpload = useRef(null)
+    const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch()
+    const studentSelected = useSelector((state) => state.StudentReducer.selectStudent)
+    const studentId = useSelector((state) => state.StudentReducer.studentData[studentSelected])
+    const [description, setDescription] = useState('')
+
+    
+
+    const handleObservation = (e) => {
+        e.preventDefault()
+
+        setLoading(true)
+        let payload = {
+            file: fileUpload.current.files[0],
+            data: {
+                description: description,
+                studentId: studentId.id
+            }
+        }
+        
+        addObservation(payload)
+        .then((response)=>{
+            if(response.data.status === 200){
+                dispatch(fungsiGetDataObservation())
+                UniversalSuccessResponse("Success", "Data berhasil ditambahkan")
+            } else {
+                UniversalErrorResponse("Error", JSON.stringify(response.data))
+            }
+        })
+        .catch((error)=>{
+            if (error.response === undefined) {
+                UniversalErrorResponse(503, "Your internet or server has offline")
+              }
+              UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+        })
+        .finally(()=>{
+            setTimeout(()=>{
+                setLoading(false)
+            }, 3000)
+        })
+    }
+
+
+
+
     return (
         <>
             <div className="flex flex-wrap mt-4">
                 <AddFormMurid />
                     <div className="flex flex-col">
                         <div className="flex">
-                            <div className="w-1/12x">
-                                <div class="flex justify-center items-center w-full">
-                                    <label for="dropzone-file" class="flex flex-col p-5 justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                        <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                                            <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-                                        </div>
-                                        <input id="dropzone-file" type="file" class="hidden" />
-                                    </label>
-                                </div> 
-                            </div>
-                            <div className="flex flex-col ml-3">
-                                <textarea name="descriptionObservation" placeholder="Descriptions" id="" cols="60" rows="4"></textarea>
-                                <div className="mt-3">
-                                    <button className="mr-3">cancel</button>
-                                    <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            type="button"
-                                    >
-                                        Save Description
-                                    </button>
-                                </div>
-                            </div>
+                                <form 
+                                onSubmit={handleObservation}
+                                // encType="multipart/form-data" 
+                                // method="post" 
+                                // action="http://localhost:3009/observation/add" 
+                                className="flex flex-col ml-3">
+                                    <input ref={fileUpload} name="file_upload" type="file" class="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white file:text-violet-700 hover:file:bg-violet-100 mb-5"/>
+                                    <textarea name="descriptionObservation" placeholder="Descriptions" id="" cols="60" rows="4"
+                                    onChange={(e)=> setDescription(e.target.value)}
+                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    ></textarea>
+                                    <div className="mt-3">
+                                        <button className="mr-3">cancel</button>
+                                        <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                type="submit"
+                                                value="Submit"
+                                        >
+                                            Save Description
+                                        </button>
+                                    </div>
+                                </form>
                         </div>
                         <Filter/>
                         <TableObservations />
                     </div>
+                    {
+                        loading ? (
+                            <Loading />
+                        ) : (
+                            <></>
+                        )
+                    }
             </div>
         </>
     )

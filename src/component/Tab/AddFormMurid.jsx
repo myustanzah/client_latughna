@@ -1,8 +1,20 @@
+import { useState } from "react";
 // modal
+import { useDispatch, useSelector } from "react-redux"
+import { fungsiGetDataObservation, fungsiSelectStudent } from "../../store/actionCreator"
 import ModalAddStudent from "../Modal/ModalAddStudent"
 
 
 export default function AddFormMurid(){
+
+const students = useSelector(state => state.StudentReducer.studentData)
+const selectStudents = useSelector(state => state.StudentReducer.selectStudent)
+const dispatch = useDispatch()
+
+function handleSelectStudent(value){
+    dispatch(fungsiSelectStudent(value))
+    dispatch(fungsiGetDataObservation())
+}
 
     return (
         <>
@@ -19,15 +31,25 @@ export default function AddFormMurid(){
                             <div className="px-4 py-5 flex-auto">
                             <div className="tab-content tab-space">
                                 <div className="" id="link1">
-                                    <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                                        Student 1
-                                    </button>
-                                    <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                                        Student 2
-                                    </button>
-                                    <button class="w-full bg-transparent hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent">
-                                        Student 3
-                                    </button>
+                                    {
+                                        students.map((e, i) => {
+                                            if (e.hide === false) {
+                                                return (
+                                                    <button 
+                                                            key={e.id} 
+                                                            onClick={()=> handleSelectStudent(i)} 
+                                                            className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
+                                                            (selectStudents === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
+                                                            }>
+                                                            {e.firstName}
+                                                    </button>
+                                                    
+                                                )
+                                            }
+                                        })
+                                    }
+                                    
+                                    
                                 </div>
                             </div>
                             </div>

@@ -1,7 +1,121 @@
 import React, {useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addStudent } from "../../api/studentControler";
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
+import { fungsiIndexStudent } from "../../store/actionCreator";
 
 export default function Modal() {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
+  const userEmail = useSelector(state => state.UserReducer.userData.content.data.email)
+  const [studentInput, setStudentInput] = useState({})
+  const [sessionStudent, setSessionStudent] = useState([
+    {
+        sesi: 1,
+        name: "AM Care",
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true
+    },
+    {
+        sesi: 2,
+        name: "AM Session",
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true
+    },
+    {
+        sesi: 3,
+        name: "Lunch",
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true
+    },
+    {
+        sesi: 4,
+        name: "PM Session",
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true
+    },
+    {
+        sesi: 5,
+        name: "PM Care",
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true
+    }
+])
+  
+
+  const handleAddStudent = (event) => {
+    const newName = event.target.name;
+    const newValue = event.target.value;
+    setStudentInput({
+        ...studentInput ,
+        [newName]: newValue
+    })  
+  }
+
+  const handleSessionStudent = (e) => {
+    const name = e.target.name
+    const newName = name.split(name[name.length - 1])[0];
+    const index = +name[name.length - 1] + 1
+    const newValue = e.target.value;
+    
+
+    setSessionStudent([...sessionStudent].map((object) => {
+      
+      if(object.sesi === index) {
+        return {
+          ...object,
+          [newName]: newValue
+        }
+      }
+      else return object;
+    }))
+
+  }
+
+  const submitAddStudent = (event) => {
+    event.preventDefault()
+
+    let inputPayload = {
+      email: userEmail,
+      student: {
+        firstName: studentInput.firstName,
+        lastName: studentInput.lastName,
+        session: sessionStudent
+      }
+    }
+    addStudent(inputPayload)
+    .then((response)=>{
+      if(response.data.status === 200){
+        UniversalSuccessResponse("Success", "Student berhasil ditambahkan")
+        dispatch(fungsiIndexStudent())
+        setShowModal(false)
+      } else {
+        UniversalErrorResponse("Error", JSON.stringify(response.data))
+      }
+    })
+    .catch((error)=>{
+      if (error.response === undefined) {
+        UniversalErrorResponse(503, "Your interner or server has offline")
+      }
+      UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    })
+  }
+
     
   return (
     <>
@@ -15,14 +129,13 @@ export default function Modal() {
       {showModal ? (
         <>
           <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            onClick={() => setShowModal(false)}
+            className="modal top-0 left-0 justify-center items-center block overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none"
           >
-            <div className="relative w-auto my-6 mx-auto max-w-6xl">
+            <div className="modal-dialog relative w-auto my-6 mx-auto max-w-6xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="modal-content border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                <div className="modal-header flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
                     Enter New Student
                   </h3>
@@ -37,12 +150,12 @@ export default function Modal() {
                 </div>
                 {/*body*/}
                 
-                <div className="relative p-6 flex-auto">
+                <div className="modal-body relative p-6 flex-auto">
                 <div class="mb-3 pt-0">
                     <label className="mb-4">First Name </label><br />
-                        <input type="text" onClick={e => e.preventDefault()} placeholder="first name" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        <input onChange={handleAddStudent} name="firstName" type="text" placeholder="first name" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                     <label className="mb-4">Last Name</label> <br />
-                        <input type="text" onClick={e => e.preventDefault()} placeholder="last name" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/>
+                        <input onChange={handleAddStudent} name="lastName" type="text" placeholder="last name" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/>
                 </div>
                   <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -72,96 +185,31 @@ export default function Modal() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="border-b">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">AM Care</td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">AM Session</td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Lunch</td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PM Session</td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">PM Care</td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" defaultChecked={"true"} />
-                                    </td>
-                                </tr>
+                              {
+                                sessionStudent.map((e, i) => {
+                                  return (
+                                          <tr key={i} class="border-b">
+                                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{e.name}</td>
+                                              
+                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                  <input onChange={handleSessionStudent} type="checkbox" name={"monday" + i} value={false} defaultChecked={true} />
+                                              </td>
+                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                  <input onChange={handleSessionStudent} type="checkbox" name={"tuesday" + i} value={false} defaultChecked={true} />
+                                              </td>
+                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                  <input onChange={handleSessionStudent} type="checkbox" name={"wednesday" + i} value={false} defaultChecked={true} />
+                                              </td>
+                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                  <input onChange={handleSessionStudent} type="checkbox" name={"thursday" + i} value={false} defaultChecked={true} />
+                                              </td>
+                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                  <input onChange={handleSessionStudent} type="checkbox" name={"friday" + i} value={false} defaultChecked={true} />
+                                              </td>
+                                          </tr>
+                                  )
+                                })
+                              }
                             </tbody>
                             </table>
                         </div>
@@ -181,11 +229,12 @@ export default function Modal() {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={submitAddStudent}
                   >
                     Save Changes
                   </button>
                 </div>
+
               </div>
             </div>
           </div>
