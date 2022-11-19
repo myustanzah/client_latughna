@@ -1,6 +1,7 @@
 import { getArea } from "../api/areaController";
 import { getObservation } from "../api/observationController";
 import { getStudent } from "../api/studentControler";
+import { getUser } from "../api/userController";
 import { 
     SET_LOGIN, 
     SET_DATA_USER, 
@@ -12,7 +13,8 @@ import {
     SET_SELECT_STUDENT,
     SET_SELECT_OBJECTIVE,
     SET_OBSERVATION,
-    SET_LOADING
+    SET_LOADING,
+    SET_USER_LIST
 } from "./actionType";
 
 
@@ -38,9 +40,35 @@ export function fungsiDataUser (input) {
     }
 }
 
+export function fungsiIndexUser (){
+    return ( dispatch, getState ) => {
+        getUser()
+        .then((response)=>{
+          if(response.data.status === 200){
+            dispatch(fungsiUserList(response.data.content))
+          } else {
+            console.log("Error", JSON.stringify(response.data))
+          }
+        })
+        .catch((error)=>{
+          if (error.response === undefined) {
+            console.log(503, "Your interner or server has offline")
+          }
+          console.log(error.response.data.status, error.response.data.messages)
+        })
+    }
+}
+
 export function fungsiSetLoading(input){
     return {
         type: SET_LOADING,
+        payload: input
+    }
+}
+
+export function fungsiUserList(input){
+    return {
+        type: SET_USER_LIST,
         payload: input
     }
 }
@@ -116,7 +144,6 @@ export function fungsiIndexStudent(){
     return (dispatch, getState) => {
         getStudent()
         .then((response)=>{
-            
             dispatch(fungsiStoreStudent(response.data.content))
         })
         .catch((error)=>{

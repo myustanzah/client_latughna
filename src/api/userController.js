@@ -11,3 +11,20 @@ export async function login(payload){
         })
     return result
 } 
+
+export async function getUser(){
+    let result = await api({
+        method: 'POST',
+        url: '/user/index',
+    })
+    return result
+}
+
+export async function userRegister(payload){
+    let result = await api({
+        method: 'POST',
+        url: '/user/register',
+        data: payload
+    })
+    return result
+}

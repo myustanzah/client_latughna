@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-// layouts
-import Auth from './layouts/Auth';
-import Admin from './layouts/Admin';
+
 
 // component
 import Notfound from './component/Notfound/NotFound';
@@ -21,33 +19,39 @@ import Attendants from './views/admin/Attendants';
 import Students from './views/admin/Students';
 import LessonPlan from './views/admin/LessonPlan';
 import Welcome from './views/admin/Welcome';
+import Users from './views/admin/Users';
 
-// ActionCreator
-import { fungsiUpdateData } from './store/actionCreator';
+
+// Layouts
+const Auth = lazy(()=> import('./layouts/Auth'));
+const Admin = lazy(()=> import('./layouts/Admin'));
 
 
 function App() {
   const routeGuard = useSelector((state) => state.UserReducer.isLoggedIn)
-  // const navigate = useNavigate()
   const items = localStorage.getItem("token")
+
 
   return (
     <>
       <Router>
-        <Routes>
-          <Route path='/auth' element={<Auth />} />
-          <Route exact path='/admin' element={items ? <Admin /> : <Navigate to="/auth" />}>
-              <Route path='welcome' element={ items ? <Welcome/> : <Navigate to="/auth" />} />
-              <Route path='dashboard' element={ items ? <Dashboard/> : <Navigate to="/auth" />} />
-              <Route path='observation' element={ items ? <Observation/> : <Navigate to="/auth" />} />
-              <Route path='attendant' element={items ? <Attendants/> : <Navigate to="/auth" />} />
-              <Route path='student' element={items ? <Students/> : <Navigate to="/auth" />} />
-              <Route path='report' element={items ? <Reports/> : <Navigate to="/auth" />} />
-              <Route path='lesson' element={items ? <LessonPlan/> : <Navigate to="/auth" />} />
-              <Route path='myaccount' element={items ? <MyAccount/> : <Navigate to="/auth" />} />
-          </Route>
-          <Route path='*' element={<Notfound />} />
-        </Routes>
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Routes>
+                <Route path='/auth' element={!items ? <Auth /> : <Navigate to="/admin/welcome"/>} />
+                <Route exact path='/admin' element={items ? <Admin /> : <Navigate to="/auth" />}>
+                    <Route path='welcome' element={ items ? <Welcome/> : <Navigate to="/auth" />} />
+                    <Route path='dashboard' element={ items ? <Dashboard/> : <Navigate to="/auth" />} />
+                    <Route path='observation' element={ items ? <Observation/> : <Navigate to="/auth" />} />
+                    <Route path='attendant' element={items ? <Attendants/> : <Navigate to="/auth" />} />
+                    <Route path='student' element={items ? <Students/> : <Navigate to="/auth" />} />
+                    <Route path='report' element={items ? <Reports/> : <Navigate to="/auth" />} />
+                    <Route path='lesson' element={items ? <LessonPlan/> : <Navigate to="/auth" />} />
+                    <Route path='myaccount' element={items ? <MyAccount/> : <Navigate to="/auth" />} />
+                    <Route path='users' element={items ? <Users/> : <Navigate to="/auth" />} />
+                </Route>
+                <Route path='*' element={<Notfound />} />
+            </Routes>
+          </Suspense>
       </Router>
     </>
   );

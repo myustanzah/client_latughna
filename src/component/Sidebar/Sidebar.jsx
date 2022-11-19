@@ -3,7 +3,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { fungsiGetDataObservation, fungsiLogOut } from "../../store/actionCreator";
+import { fungsiGetDataObservation, fungsiIndexUser, fungsiLogOut } from "../../store/actionCreator";
 
 export default function Sidebar() {
   const dispatch = useDispatch()
@@ -18,6 +18,10 @@ export default function Sidebar() {
     localStorage.removeItem("token")
     dispatch(fungsiLogOut(false))
     navigate("/auth")
+  }
+
+  const handleUsers = () => {
+    dispatch(fungsiIndexUser())
   }
 
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -39,12 +43,14 @@ export default function Sidebar() {
             to="/auth"
           >
             <div className="items-center">
-              <img
-                src={require("../../assets/logo.png")}
-                alt="..."
-                className="w-20 h-20 ml-9"
-              ></img>
-              <h1 className="my-4">Sekolah Lughatuna</h1>
+              <div className="w-full h-auto">
+                <img
+                  src={require("../../assets/logo.png")}
+                  alt="..."
+                  className="w-30 h-20 m-auto"
+                ></img>
+              </div>
+              <h1 className="my-4 text-center">Sekolah Lughatuna</h1>
             </div>
           </Link>
           {/* User */}
@@ -79,7 +85,7 @@ export default function Sidebar() {
               </div>
             </div>
             {/* Form */}
-            <form className="mt-6 mb-4 md:hidden">
+            {/* <form className="mt-6 mb-4 md:hidden">
               <div className="mb-3 pt-0">
                 <input
                   type="text"
@@ -87,7 +93,7 @@ export default function Sidebar() {
                   className="border-0 px-3 py-2 h-12 border border-solid  border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
                 />
               </div>
-            </form>
+            </form> */}
 
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
@@ -177,6 +183,18 @@ export default function Sidebar() {
                   My Account
                 </Link>
               </li>
+
+              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                <Link
+                  className={"text-xs uppercase py-3 font-bold block "}
+                  to="/admin/users"
+                  onClick={handleUsers}
+                >
+                  <i className={"fa-solid fa-user-plus mr-2 text-sm"} ></i>{" "}
+                  Users
+                </Link>
+              </li>
+
             </ul>
             <Link to="/auth">
               <button type="button" onClick={handleLogout} class="absolute bottom-0 mb-2 w-full inline-block px-6 py-2.5 bg-cyan-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">

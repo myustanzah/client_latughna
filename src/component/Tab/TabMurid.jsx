@@ -118,7 +118,7 @@ const Tabs = () => {
             </div>
           </div>
         </div>
-        <select className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" name="filterStudent" id="filterStudent">
+              <select className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" name="filterStudent" id="filterStudent">
                 <option value="firstNam">First Name</option>
                 <option value="lastName">Last Name</option>
                 <option value="youngestFirst">Youngest First</option>

@@ -4,6 +4,7 @@ export const SET_DATA_USER = 'SET_DATA_USER'
 export const SET_LOG_OUT = 'SET_LOG_OUT'
 export const SET_PAGE_STUDENT_OR_OBJ = 'SET_PAGE_STUDENT_OR_OBJ'
 export const SET_LOADING = 'SET_LOADING'
+export const SET_USER_LIST = 'SET_USER_LIST'
 
 // area
 export const SET_AREA = 'SET_AREA'

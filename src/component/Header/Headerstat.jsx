@@ -1,14 +1,31 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // components
 
 import CardStats from "../Cards/CardStats";
 
 export default function HeaderStats() {
+  const currentUser = useSelector(state => state.UserReducer.userData.content.data.kodeUser)
+  const [backgroundUser, setBackgroundUser] = useState("")
+
+  useEffect(()=>{
+    if(currentUser === 1){
+      setBackgroundUser("bg-sky-700")
+    } else if (currentUser === 2){
+      setBackgroundUser("bg-orange-500")
+    } else if (currentUser === 3){
+      setBackgroundUser("bg-yellow-700")
+    }
+  })
+  // console.log("isi user", currentUser)
+
   return (
     <>
       {/* Header */}
-      <div className="bg-sky-700 md:pt-32 pb-32 pt-12">
+      <div className={"md:pt-32 pb-32 pt-12 " + backgroundUser}>
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
             {/* Card stats */}

@@ -1,4 +1,4 @@
-export default function handleNewDate(){
+export function handleNewDate(){
     return new Date().toISOString().slice(0, 10)
 }
 

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 // helper
-import handleNewDate from "../../helper/handleDate";
+import { handleNewDate } from "../../helper/handleDate";
 
 export default function Modal() {
   const [showModal, setShowModal] = useState(false);
