@@ -20,6 +20,7 @@ import Students from './views/admin/Students';
 import LessonPlan from './views/admin/LessonPlan';
 import Welcome from './views/admin/Welcome';
 import Users from './views/admin/Users';
+import ForgotPassword from './views/auth/ForgotPassword';
 
 
 // Layouts
@@ -30,7 +31,7 @@ const Admin = lazy(()=> import('./layouts/Admin'));
 function App() {
   const routeGuard = useSelector((state) => state.UserReducer.isLoggedIn)
   const items = localStorage.getItem("token")
-
+  
 
   return (
     <>
@@ -38,6 +39,7 @@ function App() {
           <Suspense fallback={<h1>Loading...</h1>}>
             <Routes>
                 <Route path='/auth' element={!items ? <Auth /> : <Navigate to="/admin/welcome"/>} />
+                <Route path='/forgot-password' element={!items ? <ForgotPassword /> : <Navigate to="/admin/welcome"/>} />
                 <Route exact path='/admin' element={items ? <Admin /> : <Navigate to="/auth" />}>
                     <Route path='welcome' element={ items ? <Welcome/> : <Navigate to="/auth" />} />
                     <Route path='dashboard' element={ items ? <Dashboard/> : <Navigate to="/auth" />} />

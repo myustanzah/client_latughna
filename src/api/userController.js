@@ -45,3 +45,13 @@ export async function deleteUsers(payload){
     })
     return result
 }
+
+export async function resetPassword(payload){
+
+    let result = await api({
+        method: 'POST',
+        url: '/user/reset-password',
+        data: payload
+    })
+    return result
+}
