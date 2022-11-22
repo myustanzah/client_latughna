@@ -76,7 +76,7 @@ export default function Observation(){
                                 // method="post" 
                                 // action="http://localhost:3009/observation/add" 
                                 className="flex flex-col ml-3">
-                                    <input ref={fileUpload} name="file_upload" type="file" class="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white file:text-violet-700 hover:file:bg-violet-100 mb-5"/>
+                                    <input ref={fileUpload} name="file_upload" type="file" className="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white file:text-violet-700 hover:file:bg-violet-100 mb-5"/>
                                     <textarea name="descriptionObservation" placeholder="Descriptions" id="" cols="60" rows="4"
                                     onChange={(e)=> setDescription(e.target.value)}
                                     className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"

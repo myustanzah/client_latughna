@@ -51,7 +51,7 @@ export function fungsiIndexUser (){
           }
         })
         .catch((error)=>{
-          if (error.response === undefined) {
+          if (!error.response) {
             console.log(503, "Your interner or server has offline")
           }
           console.log(error.response.data.status, error.response.data.messages)

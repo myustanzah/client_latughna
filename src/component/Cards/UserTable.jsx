@@ -1,18 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 
 // components
-import TableDropdown from "../../Dropdowns/TableDropdown";
-import NewDropdown from "../../Dropdowns/NewDropdown";
-import { useSelector } from "react-redux";
 import Loading from "../Modal/Loading";
 
 // Modal
 import ModalAddUser from "../Modal/ModalAddUser";
+import { deleteUsers } from "../../api/userController";
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
+import { fungsiIndexUser } from "../../store/actionCreator";
 
 
 export default function CardTable({ color }) {
   const userList = useSelector(state => state.UserReducer.userList)
+  const dispatch = useDispatch()
+
+  const deleteUser = (value) => {
+    console.log('delete')
+    deleteUsers(value)
+    .then((response)=>{
+      if(response.data.status === 201){
+        UniversalSuccessResponse("Success", "User berhasil di suspend")
+        dispatch(fungsiIndexUser())
+      } else {
+        UniversalErrorResponse("Error", JSON.stringify(response.data))
+      }
+    })
+    .catch((error)=>{
+      if (error.response === undefined) {
+        UniversalErrorResponse(503, "Your interner or server has offline")
+      }
+      UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    })
+  }
   
   return (
     <>
@@ -164,8 +185,18 @@ export default function CardTable({ color }) {
                           </div>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                          <button className="justify-items-end bg-green-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Edit</button>
-                          <button className="justify-items-end bg-red-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Delete</button>
+                          {/* <button className="justify-items-end bg-green-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                            Edit
+                          </button> */}
+                          <button 
+                            onClick={(v)=> {
+                              v.preventDefault()
+                                deleteUser(e.id)
+                              }
+                            }
+                            className="justify-items-end bg-red-500 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     )

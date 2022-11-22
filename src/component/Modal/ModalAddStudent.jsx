@@ -7,7 +7,7 @@ import { fungsiIndexStudent } from "../../store/actionCreator";
 export default function Modal() {
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
-  const userEmail = useSelector(state => state.UserReducer.userData.content.data.email)
+  const userEmail = useSelector(state => state.UserReducer.userData.email)
   const [studentInput, setStudentInput] = useState({})
   const [sessionStudent, setSessionStudent] = useState([
     {
@@ -151,35 +151,35 @@ export default function Modal() {
                 {/*body*/}
                 
                 <div className="modal-body relative p-6 flex-auto">
-                <div class="mb-3 pt-0">
+                <div className="mb-3 pt-0">
                     <label className="mb-4">First Name </label><br />
-                        <input onChange={handleAddStudent} name="firstName" type="text" placeholder="first name" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        <input onChange={handleAddStudent} name="firstName" type="text" placeholder="first name" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                     <label className="mb-4">Last Name</label> <br />
-                        <input onChange={handleAddStudent} name="lastName" type="text" placeholder="last name" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/>
+                        <input onChange={handleAddStudent} name="lastName" type="text" placeholder="last name" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/>
                 </div>
-                  <div class="flex flex-col">
-                    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="overflow-hidden">
-                            <table class="w-11/12">
-                            <thead class="border-b border-x-gray-500">
+                  <div className="flex flex-col">
+                    <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                        <div className="overflow-hidden">
+                            <table className="w-11/12">
+                            <thead className="border-b border-x-gray-500">
                                 <tr>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Session
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Mon
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Tue
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Wed
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Thu
                                     </th>
-                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                         Fri
                                     </th>
                                 </tr>
@@ -188,22 +188,22 @@ export default function Modal() {
                               {
                                 sessionStudent.map((e, i) => {
                                   return (
-                                          <tr key={i} class="border-b">
-                                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{e.name}</td>
+                                          <tr key={i} className="border-b">
+                                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{e.name}</td>
                                               
-                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                   <input onChange={handleSessionStudent} type="checkbox" name={"monday" + i} value={false} defaultChecked={true} />
                                               </td>
-                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                   <input onChange={handleSessionStudent} type="checkbox" name={"tuesday" + i} value={false} defaultChecked={true} />
                                               </td>
-                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                   <input onChange={handleSessionStudent} type="checkbox" name={"wednesday" + i} value={false} defaultChecked={true} />
                                               </td>
-                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                   <input onChange={handleSessionStudent} type="checkbox" name={"thursday" + i} value={false} defaultChecked={true} />
                                               </td>
-                                              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                   <input onChange={handleSessionStudent} type="checkbox" name={"friday" + i} value={false} defaultChecked={true} />
                                               </td>
                                           </tr>

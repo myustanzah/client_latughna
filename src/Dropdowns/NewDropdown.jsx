@@ -2,11 +2,11 @@ export default function NewDropdown(){
 
     return (
         <>
-            <div class="flex justify-center">
+            <div className="flex justify-center">
             <div>
-                <div class="dropdown relative">
+                <div className="dropdown relative">
                 <button
-                    class="dropdown-toggle"
+                    className="dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton2"
                     data-bs-toggle="dropdown"
@@ -18,7 +18,7 @@ export default function NewDropdown(){
                     focusable="false"
                     data-prefix="fas"
                     data-icon="caret-down"
-                    class="w-2 ml-2"
+                    className="w-2 ml-2"
                     role="img"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 320 512"
@@ -30,7 +30,7 @@ export default function NewDropdown(){
                     </svg>
                 </button>
                 <ul
-                    class="
+                    className="
                     dropdown-menu
                     min-w-max
                     absolute
@@ -54,7 +54,7 @@ export default function NewDropdown(){
                 >
                     <li>
                     <button
-                        class="
+                        className="
                         dropdown-item
                         text-sm
                         py-2
@@ -72,7 +72,7 @@ export default function NewDropdown(){
                     </li>
                     <li>
                     <button
-                        class="
+                        className="
                         dropdown-item
                         text-sm
                         py-2
@@ -90,7 +90,7 @@ export default function NewDropdown(){
                     </li>
                     <li>
                     <button
-                        class="
+                        className="
                         dropdown-item
                         text-sm
                         py-2

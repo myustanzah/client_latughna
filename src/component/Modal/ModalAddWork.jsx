@@ -8,7 +8,7 @@ export default function Modal() {
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
   const selectArea = useSelector(state => state.AreaReducer.selectArea)
-  const getIdArea = useSelector(state => state.AreaReducer.areaData[selectArea])
+  const getIdArea = useSelector(state => state.AreaReducer.areaData)
   const [inputObjective, setInputObjective] = useState("")
 
   function handleInputObjective(e){
@@ -19,11 +19,12 @@ export default function Modal() {
 
   function submitAddObjective(e){
     e.preventDefault()
+
     let inputPayload = {
-      id: getIdArea.id,
+      id: getIdArea[selectArea].id,
       name: inputObjective,
     }
-
+    
     addObjective(inputPayload)
     .then((response)=>{
       if(response.data.status === 200){
@@ -40,6 +41,7 @@ export default function Modal() {
       }
       UniversalErrorResponse(error.response.data.status, error.response.data.messages)
     })
+    
   }
 
     
@@ -78,9 +80,19 @@ export default function Modal() {
                 {/*body*/}
                 
                 <div className="relative p-6 flex-auto">
-                  <div class="mb-3 pt-0">
-                      <label className="mb-4">Add Objective </label><br />
-                      <input type="text" onChange={handleInputObjective} name="objective" placeholder="objective" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                  <div className="mb-3 pt-0">
+                    {
+                      getIdArea.length < 1 ? (
+                        <>
+                          <label className="mb-4">Please Input Area First </label>
+                        </>
+                      ) : (
+                        <>
+                          <label className="mb-4">Add Objective </label><br />
+                          <input type="text" onChange={handleInputObjective} name="objective" placeholder="objective" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        </>
+                      )
+                    }
                   </div>
                 </div>
                 {/*footer*/}

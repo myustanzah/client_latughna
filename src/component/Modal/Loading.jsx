@@ -11,18 +11,18 @@ export default function Loading() {
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             
           >
-            <div class="flex items-center justify-center space-x-2">
-                {/* <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
-                    <span class="visually-hidden">Loading...</span>
+            <div className="flex items-center justify-center space-x-2">
+                {/* <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div> */}
-                <div class="spinner-grow inline-block w-12 h-12 bg-current rounded-full opacity-0" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <div className="spinner-grow inline-block w-12 h-12 bg-current rounded-full opacity-0" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
-                <div class="spinner-grow inline-block w-12 h-12 bg-current rounded-full opacity-0" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <div className="spinner-grow inline-block w-12 h-12 bg-current rounded-full opacity-0" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
-                <div class="spinner-grow inline-block w-12 h-12 bg-current rounded-full opacity-0" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <div className="spinner-grow inline-block w-12 h-12 bg-current rounded-full opacity-0" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
                 </div>
           </div>

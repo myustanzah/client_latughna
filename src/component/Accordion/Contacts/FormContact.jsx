@@ -1,12 +1,54 @@
 import { useState } from "react"
-import useFetchCountry from "../../../hooks/fecthCountry"
+import { useDispatch, useSelector } from "react-redux"
+import { addContact } from "../../../api/contactController"
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../../helper/UniversalResponse"
+import { fungsiIndexStudent } from "../../../store/actionCreator"
+// import useFetchCountry from "../../../hooks/fecthCountry"
 
 export default function FormContact(){
 
     const [showFormContact, setShoeFormContact] = useState(false)
     const [imgProfile, setImageProfile] = useState(true)
-    const [dataCountry, loading] = useFetchCountry()
+    const [inputContact, setInputContact] = useState({})
+    // const [dataCountry, loading] = useFetchCountry()
+    const studentsData = useSelector(state => state.StudentReducer.studentData)
+    const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
+    const dispatch = useDispatch()
 
+    function handleInputContact(e) {
+        e.preventDefault()
+        let name = e.target.name
+        let value = e.target.value
+        setInputContact({
+            ...inputContact, 
+            [name]: value
+        })
+    }
+
+    function submitInputContact(){
+        
+        let payload = {
+            id: studentsData[selectStudent].id,
+            data: inputContact
+        }
+
+        addContact(payload)
+        .then((response)=>{
+            if(response.data.status === 200){
+                dispatch(fungsiIndexStudent())
+                UniversalSuccessResponse("Success", "Data berhasil diupdate")
+            } else {
+                UniversalErrorResponse("Error", JSON.stringify(response.data))
+            }
+        })
+        .catch((error)=>{
+            if (error.response === undefined) {
+                UniversalErrorResponse(503, "Your internet or server has offline")
+              }
+            UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+        })
+
+    }
 
     return (
         <div className="w-full flex flex-row">
@@ -20,7 +62,7 @@ export default function FormContact(){
                                         <label className="mr-5">First Name</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.firstName} name="firstName" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -28,7 +70,7 @@ export default function FormContact(){
                                         <label className="mr-5">Last Name</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.lastName} name="lastName" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -36,7 +78,7 @@ export default function FormContact(){
                                         <label className="mr-5">Relationship</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.relationship} name="relationship" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -44,26 +86,14 @@ export default function FormContact(){
                                         <label className="mr-5">Comments</label>
                                     </td>
                                     <td>
-                                    <textarea class="form-control
-                                                    block
-                                                    w-full
-                                                    px-3
-                                                    py-1.5
-                                                    text-base
-                                                    font-normal
-                                                    text-gray-700
-                                                    bg-white bg-clip-padding
-                                                    border border-solid border-gray-300
-                                                    rounded
-                                                    transition
-                                                    ease-in-out
-                                                    m-0
-                                                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                                                "
-                                                id="exampleFormControlTextarea1"
-                                                rows="3"
-                                                placeholder="Your message"
-                                                ></textarea>
+                                    <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    id="exampleFormControlTextarea1"
+                                    rows="3"
+                                    name="comment"
+                                    placeholder="Your message"
+                                    onChange={handleInputContact}
+                                    defaultValue={studentsData[selectStudent].Contact.comment}
+                                    ></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -71,7 +101,7 @@ export default function FormContact(){
                                         <label className="mr-5">Home Phone</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.homePhone} name="homePhone" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>        
                                 <tr>
@@ -79,7 +109,7 @@ export default function FormContact(){
                                         <label className="mr-5">Mobile Phone</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.mobilePhone} name="mobilePhone" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -87,7 +117,7 @@ export default function FormContact(){
                                         <label className="mr-5">E-mail</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.email} name="email" type="email" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -95,7 +125,7 @@ export default function FormContact(){
                                         <label className="mr-5">Home Address</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.homeAddress} name="homeAddress" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -103,7 +133,7 @@ export default function FormContact(){
                                         <label className="mr-5">City</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.city} name="city" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -111,12 +141,12 @@ export default function FormContact(){
                                         <label className="mr-5">State</label>
                                     </td>
                                     <td className="flex flex-row justify-between">
-                                        <input type="text" class="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.state} name="state" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                         <label>Postal Code</label>
-                                        <input type="text" class="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.postalCode} name="postalCode" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
                                     </td>
                                 </tr>
-                                <tr>
+                                {/* <tr>
                                     <td>
                                         <label className="mr-5">Country</label>
                                     </td>
@@ -129,13 +159,13 @@ export default function FormContact(){
                                         }
                                     </select>
                                     </td>
-                                </tr>
+                                </tr> */}
                                 <tr>
                                     <td>
                                         <label className="mr-5">Work Address</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.workAddress} name="workAddress" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -143,7 +173,7 @@ export default function FormContact(){
                                         <label className="mr-5">City</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.cityWork} name="cityWork" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -151,12 +181,12 @@ export default function FormContact(){
                                         <label className="mr-5">State</label>
                                     </td>
                                     <td className="flex flex-row justify-between">
-                                        <input type="text" class="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.stateWork} name="stateWork" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                         <label>Postal Code</label>
-                                        <input type="text" class="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
+                                        <input onChange={handleInputContact} defaultValue={studentsData[selectStudent].Contact.postalCodeWork} name="postalCodeWork" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
                                     </td>
                                 </tr>
-                                <tr>
+                                {/* <tr>
                                     <td>
                                         <label className="mr-5">Country</label>
                                     </td>
@@ -169,8 +199,8 @@ export default function FormContact(){
                                             }
                                         </select>
                                     </td>
-                                </tr>
-                                <tr>
+                                </tr> */}
+                                {/* <tr>
                                     <td></td>
                                     <td>
                                         <tr>
@@ -199,7 +229,7 @@ export default function FormContact(){
                                         </tr>
                                     </td>
                                     
-                                </tr>
+                                </tr> */}
                             </table> 
                         </div>
 
@@ -222,6 +252,7 @@ export default function FormContact(){
                                 >Cancel</button>
                                 <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
+                                        onClick={submitInputContact}
                                 >Save</button>
                             </div>
 

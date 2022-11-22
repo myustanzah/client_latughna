@@ -6,7 +6,7 @@ import { fungsiIndexArea } from "../../store/actionCreator"
 
 export default function Modal() {
   const [showModal, setShowModal] = useState(false);
-  const userEmail = useSelector(state => state.UserReducer.userData.content.data.email)
+  const userEmail = useSelector(state => state.UserReducer.userData.email)
   const [inputArea, setInputArea] = useState("")
   const dispatch = useDispatch()
   
@@ -77,7 +77,7 @@ export default function Modal() {
                 {/*body*/}
                 
                 <div className="relative p-6 flex-auto">
-                  <div class="mb-3 pt-0">
+                  <div className="mb-3 pt-0">
                       <label className="mb-4">Add Area </label><br />
                       <input onChange={handleInputArea} name="area" type="text" placeholder="area" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                   </div>

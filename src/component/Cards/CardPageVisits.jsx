@@ -29,38 +29,41 @@ export default function CardPageVisits() {
 
   useEffect(()=>{
     let setStudent = []
-    
-    students.studentData.forEach((e, i) => {
-      let temp = {
-        id : e.id,
-        name : e.firstName,
-        progress : "",
-        lastUpdate : dateFormat(e.updatedAt)
-      }
-      setStudent.push(temp)
-    });
-    setDataStudent(setStudent)
+    if (students.studentData.length >= 1) {
+      students.studentData.forEach((e, i) => {
+        let temp = {
+          id : e.id,
+          name : e.firstName,
+          progress : "",
+          lastUpdate : dateFormat(e.updatedAt)
+        }
+        setStudent.push(temp)
+      });
+      setDataStudent(setStudent)
+    }
 
   }, [])
 
   useEffect(()=>{
     let setArea = []
     
-    areas.areaData[areas.selectArea].Objectives.forEach((e, i) => {
-      let temp = {
-        id : e.id,
-        name : e.name,
-        progresA : e.progresA,
-        progresB : e.progresB,
-        progresC : e.progresC,
-        hide: e.hide,
-        lastUpdate : dateFormat(e.updatedAt)
-      }
-      setArea.push(temp)
-    });
-    setWorks(setArea)
+    if (areas.areaData.length >= 1) {
+      areas.areaData[areas.selectArea].Objectives.forEach((e, i) => {
+        let temp = {
+          id : e.id,
+          name : e.name,
+          progresA : e.progresA,
+          progresB : e.progresB,
+          progresC : e.progresC,
+          hide: e.hide,
+          lastUpdate : dateFormat(e.updatedAt)
+        }
+        setArea.push(temp)
+      });
+      setWorks(setArea)
+    }
 
-  }, [setWorks, areas.areaData[areas.selectArea].Objectives])
+  }, [setWorks, areas.areaData.length >= 1 ? areas.areaData[areas.selectArea].Objectives : areas.areaData])
 
   function handleObjectiveShow(event) {
     let selectObjective = event.target.value
@@ -74,17 +77,29 @@ export default function CardPageVisits() {
           <div className="flex-col items-center">
             <div className="flex relative w-full justify-between px-4 max-w-full">
               <h3 className="font-semibold text-base text-blueGray-700">
-                {students.studentData[students.selectStudent].firstName}
-              </h3>
-              <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={handleObjectiveShow} name="" id="">
+                
                 {
-                  areas.areaData.map((e, i) => {
-                    if (e.hide === false) {
-                      return(
-                          <option key={i} value={i}>{e.name}</option>
-                        ) 
-                    }
-                  })
+                  students.studentData.length < 1 ? (
+                    "Dummy"
+                  ) : (
+                    students.studentData[students.selectStudent].firstName
+                  )
+                }
+              </h3>
+              <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+                      onChange={handleObjectiveShow} name="" id="">
+                {
+                  areas.areaData.length < 1 ? (
+                        <option key="" value="">Not Found</option>
+                  ) : (
+                      areas.areaData.map((e, i) => {
+                        if (e.hide === false) {
+                          return(
+                              <option key={e.id} value={i}>{e.name}</option>
+                            ) 
+                        }
+                      })
+                  )
                 }
               </select> 
             </div>

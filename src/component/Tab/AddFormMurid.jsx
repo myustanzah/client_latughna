@@ -32,21 +32,25 @@ function handleSelectStudent(value){
                             <div className="tab-content tab-space">
                                 <div className="" id="link1">
                                     {
-                                        students.map((e, i) => {
-                                            if (e.hide === false) {
-                                                return (
-                                                    <button 
-                                                            key={e.id} 
-                                                            onClick={()=> handleSelectStudent(i)} 
-                                                            className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
-                                                            (selectStudents === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
-                                                            }>
-                                                            {e.firstName}
-                                                    </button>
-                                                    
-                                                )
-                                            }
-                                        })
+                                        students.length < 1 ? (
+                                            <button>Data Not Found</button>
+                                        ) : (
+                                            students.map((e, i) => {
+                                                if (e.hide === false) {
+                                                    return (
+                                                        <button 
+                                                                key={e.id} 
+                                                                onClick={()=> handleSelectStudent(i)} 
+                                                                className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
+                                                                (selectStudents === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
+                                                                }>
+                                                                {e.firstName}
+                                                        </button>
+                                                        
+                                                    )
+                                                }
+                                            })
+                                        )
                                     }
                                     
                                     

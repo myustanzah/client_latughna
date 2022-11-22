@@ -1,7 +1,35 @@
 import React, {useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { hideStudent } from "../../../api/studentControler";
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../../helper/UniversalResponse";
+import { fungsiIndexStudent } from "../../../store/actionCreator";
 
 export default function ModalUnenrollStudent() {
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
+  const studentData = useSelector(state => state.StudentReducer)
+
+  function handleHideStudent(){
+    setShowModal(false)
+    let getIdStudent = studentData.studentData[studentData.selectStudent]
+
+    hideStudent(getIdStudent.id)
+    .then((response) => {
+      if(response.data.status === 201){
+        UniversalSuccessResponse("Success", "Student hide success")
+        dispatch(fungsiIndexStudent())
+        setShowModal(false)
+      } else {
+        UniversalErrorResponse("Error", JSON.stringify(response.data))
+      }
+    })
+    .catch((error) => {
+      if (error.response === undefined) {
+        UniversalErrorResponse(503, "Your interner or server has offline")
+      }
+      UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    })
+  }
     
   return (
     <>
@@ -24,7 +52,7 @@ export default function ModalUnenrollStudent() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                  Unenroll Student
+                    Unenroll Student
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -59,7 +87,7 @@ export default function ModalUnenrollStudent() {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={handleHideStudent}
                   >
                     Save Changes
                   </button>

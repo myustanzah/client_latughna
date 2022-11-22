@@ -1,8 +1,53 @@
 import React from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-// components
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
+import { fungsiDataUser } from "../../store/actionCreator";
+
+// api
+import { editUser } from "../../api/userController";
+
 
 export default function CardSettings() {
+  
+  const userLogIn = useSelector(state => state.UserReducer.userData)
+  const [inputUserEdit, setInputUserEdit] = useState(userLogIn)
+  const dispatch = useDispatch()
+
+  const handleChangeInputUserEdit = (e) => {
+    e.preventDefault()
+    let name = e.target.name
+    let value = e.target.value
+    setInputUserEdit({
+      ...inputUserEdit, 
+      [name]: value
+    })
+  }
+
+  const submitEditUser = (e) => {
+    e.preventDefault()
+    let payload = {
+      id: userLogIn.id,
+      data: inputUserEdit
+    }
+    editUser(payload)
+    .then((response)=>{
+      if(response.data.status === 201){
+        UniversalSuccessResponse("Success", "Update Sukses")
+        dispatch(fungsiDataUser(response.data.content))
+      } else {
+        UniversalErrorResponse("Error", JSON.stringify(response.data))
+      }
+    })
+    .catch((error)=>{
+      if (error.response === undefined) {
+        UniversalErrorResponse(503, "Your interner or server has offline")
+      }
+      UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    })
+  }
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -12,7 +57,7 @@ export default function CardSettings() {
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-          <form>
+          <form onSubmit={submitEditUser}>
             <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
               User Information
             </h6>
@@ -28,7 +73,9 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="lucky.jesse"
+                    defaultValue={userLogIn.name}
+                    name="name"
+                    onChange={handleChangeInputUserEdit}
                   />
                 </div>
               </div>
@@ -43,7 +90,9 @@ export default function CardSettings() {
                   <input
                     type="email"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="jesse@example.com"
+                    defaultValue={userLogIn.email}
+                    name="email"
+                    onChange={handleChangeInputUserEdit}
                   />
                 </div>
               </div>
@@ -67,7 +116,9 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                    defaultValue={userLogIn.address}
+                    name="address"
+                    onChange={handleChangeInputUserEdit}
                   />
                 </div>
               </div>
@@ -82,7 +133,9 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="New York"
+                    defaultValue={userLogIn.city}
+                    name="city"
+                    onChange={handleChangeInputUserEdit}
                   />
                 </div>
               </div>
@@ -97,7 +150,9 @@ export default function CardSettings() {
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="Postal Code"
+                    defaultValue={userLogIn.postalCode}
+                    name="postalCode"
+                    onChange={handleChangeInputUserEdit}
                   />
                 </div>
               </div>
@@ -120,14 +175,18 @@ export default function CardSettings() {
                   <textarea
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    defaultValue="A beautiful UI Kit and Admin for React & Tailwind CSS. It is Free and Open Source."
+                    defaultValue={userLogIn.descriptions}
                     rows="4"
+                    name="descriptions"
+                    onChange={handleChangeInputUserEdit}
                   ></textarea>
                 </div>
               </div>
             </div>
             <div className="flex justify-end min-w-full">
-              <button type="submit" className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-10 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>
+              <button 
+              type="submit" 
+              className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-10 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Save</button>
             </div>
           </form>
         </div>

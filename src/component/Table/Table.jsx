@@ -106,73 +106,86 @@ export default function Table(props){
               </tr>
             </thead>
             <tbody>
-                          {
-                            props.showTypeTable === 1 ? (
-                              props.data.map((e) => {
-                                return (
-                                    e.hide === false ? (
-                                      <tr key={e.id}>
-                                      <td>
-                                          <button onClick={()=>submitHideObjective(e.id)} className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-4" type="button">
-                                                  x
-                                          </button>
-                                      </td>
-                                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {e.name}
-                                      </td>
-                                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <div className="flex flex-nowrap justify-between">
-                                          <input type="checkbox" class="appearance-none checked:bg-blue-500" />
-                                          <input type="checkbox" class="appearance-none checked:bg-blue-500" />
-                                          <input type="checkbox" class="appearance-none checked:bg-blue-500" />
-                                        </div>
-                                      </td>
-                                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        {e.lastUpdate}
-                                      </td>
-                                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                      <button onClick={()=> submitAddLessonPlan(e.id)} className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-                                        +
-                                      </button>
-                                      </td>
-                                    </tr>
-                                    ) : (
-                                      <></>
-                                    ) 
-                                )
+              {
+                props.data.length >= 1 ? (
+                  <>
+                    {
+                      props.showTypeTable === 1 ? (
+                        props.data.map((e) => {
+                          return (
+                              e.hide === false ? (
+                                <tr key={e.id}>
+                                <td>
+                                    <button onClick={()=>submitHideObjective(e.id)} className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-4" type="button">
+                                            x
+                                    </button>
+                                </td>
+                                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                  {e.name}
+                                </td>
+                                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                  <div className="flex flex-nowrap justify-between">
+                                    <input type="checkbox" className="appearance-none checked:bg-blue-500" />
+                                    <input type="checkbox" className="appearance-none checked:bg-blue-500" />
+                                    <input type="checkbox" className="appearance-none checked:bg-blue-500" />
+                                  </div>
+                                </td>
+                                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                  {e.lastUpdate}
+                                </td>
+                                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <button onClick={()=> submitAddLessonPlan(e.id)} className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                  +
+                                </button>
+                                </td>
+                              </tr>
+                              ) : (
+                                <></>
+                              ) 
+                          )
 
-                              })
-                        ) : (
-                          props.data.map((e) => {
-                            return (
+                        })
+                      ) : (
+                        props.data.map((e) => {
+                      return (
 
-                                      <tr key={e.id}>
-                                        <td>
-                                            <></>                                        
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                          {e.name}
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                          <div className="flex flex-nowrap justify-between">
-                                            <input type="checkbox" class="appearance-none checked:bg-blue-500" />
-                                            <input type="checkbox" class="appearance-none checked:bg-blue-500" />
-                                            <input type="checkbox" class="appearance-none checked:bg-blue-500" />
-                                          </div>
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                          {e.lastUpdate}
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                        <button className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-                                          +
-                                        </button>
-                                        </td>
-                                      </tr>
+                                <tr key={e.id}>
+                                  <td>
+                                      <></>                                        
+                                  </td>
+                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {e.name}
+                                  </td>
+                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div className="flex flex-nowrap justify-between">
+                                      <input type="checkbox" className="appearance-none checked:bg-blue-500" />
+                                      <input type="checkbox" className="appearance-none checked:bg-blue-500" />
+                                      <input type="checkbox" className="appearance-none checked:bg-blue-500" />
+                                    </div>
+                                  </td>
+                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {e.lastUpdate}
+                                  </td>
+                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                  <button className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                    +
+                                  </button>
+                                  </td>
+                                </tr>
                                 )
                               })
                             )
                           }
+                      </>
+
+                ) : (
+                  <tr>
+                    <td>
+                      Data not Found
+                    </td>
+                  </tr>
+                )
+              }
             </tbody>
           </table>
           {

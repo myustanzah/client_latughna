@@ -1,5 +1,4 @@
 import api from './config'
-import qs from 'qs'
 
 export async function addObservation(payload){
     try {
@@ -19,7 +18,7 @@ export async function addObservation(payload){
         
         return result
     } catch (error) {
-        console.log(error)
+        return error
     }
 }
 

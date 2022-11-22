@@ -47,7 +47,7 @@ export default function Modal() {
                         <label >Updates for(MM/DD/YY) </label>
                       </td>
                       <td>
-                        <input type="date" value={handleNewDate()} class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        <input type="date" value={handleNewDate()} className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                       </td>
                     </tr>
                     <tr>
@@ -55,7 +55,7 @@ export default function Modal() {
                         <label className="mb-4 mr-9">Students </label>
                       </td>
                       <td>
-                        <textarea class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        <textarea className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                       </td>
                     </tr>
                     <tr>
@@ -63,7 +63,7 @@ export default function Modal() {
                           <label className="mb-4 mr-14">Objective </label>
                         </td>
                         <td>
-                          <input type="text" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                          <input type="text" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                         </td>
                     </tr>
                     
@@ -74,7 +74,7 @@ export default function Modal() {
                         <label className="mb-4 mr-9">Progress </label>
                       </td>
                       <td>
-                        <input type="text" class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        <input type="text" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                       </td>
                     </tr>
                     <tr>
@@ -82,7 +82,7 @@ export default function Modal() {
                           <label className="mb-4 mr-5">Comments </label>
                         </td>
                         <td>
-                          <textarea class="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                          <textarea className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                         </td>
                     </tr>
                   </tbody>

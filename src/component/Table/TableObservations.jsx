@@ -14,26 +14,26 @@ function TableObservations() {
 
     return ( 
         <div>
-            <div class="flex flex-col">
-                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                    <div class="overflow-hidden">
-                        <table class="min-w-full">
-                        <thead class="border-b">
+            <div className="flex flex-col">
+                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div className="overflow-hidden">
+                        <table className="min-w-full">
+                        <thead className="border-b">
                             <tr>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                     Date
                                 </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                     Observation
                                 </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                     Progress
                                 </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                     User
                                 </th>
-                                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                     Tools
                                 </th>
                             </tr>
@@ -42,31 +42,31 @@ function TableObservations() {
                             {
                                 dataObservation.map((e, i)=>{
                                     return (
-                                        <tr key={e.id} class="border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{dateFormat(e.updatedAt)}</td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                <img src={`${url_image}/observation/${e.fileUrl}`} class="object-cover h-20 w-20" alt="img" srcset="" />
+                                        <tr key={e.id} className="border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{dateFormat(e.updatedAt)}</td>
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                <img src={`${url_image}/observation/${e.fileUrl}`} className="object-cover h-20 w-20" alt="img" srcset="" />
                                                 <p>{e.description}</p>
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 <p>Chekcbox</p>
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 <p>{e.User.name}</p>
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 <div className="flex w-full justify-between">
                                                     <button>
-                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                        <i className="fa-solid fa-pen-to-square"></i>
                                                     </button>
                                                     <button>
-                                                        <i class="fa-solid fa-comment"></i>
+                                                        <i className="fa-solid fa-comment"></i>
                                                     </button>
                                                     <button>
-                                                        <i class="fa-regular fa-envelope"></i>                                           
+                                                        <i className="fa-regular fa-envelope"></i>                                           
                                                     </button>
                                                     <button>
-                                                        <i class="fa-regular fa-trash-can"></i>                                           
+                                                        <i className="fa-regular fa-trash-can"></i>                                           
                                                     </button>
                                                 </div>
                                             </td>                                            

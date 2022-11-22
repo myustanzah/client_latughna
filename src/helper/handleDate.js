@@ -10,4 +10,8 @@ export function dateFormat(string) {
     return result;
 }
 
+export function dateFormatymd(string){
+    return string.split('T')[0]
+}
+
 

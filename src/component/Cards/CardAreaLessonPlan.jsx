@@ -12,10 +12,11 @@ export default function CardAreaLessonPlans() {
   const dispatch = useDispatch()
   const shoTypeTable = useSelector(state => state.UserReducer.cardPageVisit)
   const selectIndexStudent = useSelector(state => state.StudentReducer.selectStudent)
-  const selectStudentData = useSelector(state => state.StudentReducer.studentData[selectIndexStudent])
+  const selectStudentData = useSelector(state => state.StudentReducer.studentData)
   const selectObjective = useSelector(state => state.AreaReducer.selectObjective)
   const areas = useSelector(state => state.AreaReducer)
   
+
   const submitDeleteLessonArea = (value) => {
     let payload = {
       studentId: selectStudentData.id,
@@ -85,58 +86,67 @@ export default function CardAreaLessonPlans() {
               </tr>
             </thead>
             <tbody>
-              
-              
               {
-
-                shoTypeTable === 1 ? (
-                  selectStudentData.Objectives.length <= 0 ? (
-                    <tr className="text-center">
-                      Data Not Found
-                    </tr>
-  
-                  ) : (
-                    selectStudentData.Objectives.map((data, i) => {
-                        return (
-                                <tr key={i}>
-                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                                    {data.name}
-                                  </td>
-                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <button onClick={()=> submitDeleteLessonArea(data.id)} className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-                                      x
-                                    </button>
-                                  </td>
-                                </tr>
-                            )
-                      })
-                   )
+                areas.areaData.length < 1 || selectStudentData.length < 1 ? (
+                  <tr>Data Not Found</tr>
                 ) : (
-                  areas.areaData[areas.selectArea].Objectives[selectObjective].Students.length <= 0 ? (
-                    <tr className="text-center">
-                       Data Not Found
-                    </tr>
-  
-                  ) : (
-                    areas.areaData[areas.selectArea].Objectives[selectObjective].Students.map((data, i) => {
-                        return (
-                                <tr key={i}>
-                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
-                                    {data.firstName}
-                                  </td>
-                                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                  <button className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-                                    x
-                                  </button>
-                                  </td>
-                                </tr>
-                            )
-                      })
-                   )
-                )
+                  <>
+                      {
+                        shoTypeTable === 1 ? (
 
+                          selectStudentData[selectIndexStudent].Objectives.length <= 0 ? (
+                            <tr className="text-center">
+                              Data Not Found
+                            </tr>
+          
+                          ) : (
+                            selectStudentData[selectIndexStudent].Objectives.map((data, i) => {
+                                return (
+                                        <tr key={i}>
+                                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                            {data.name}
+                                          </td>
+                                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <button onClick={()=> submitDeleteLessonArea(data.id)} className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                              x
+                                            </button>
+                                          </td>
+                                        </tr>
+                                    )
+                              })
+                          )
+
+
+                        ) : (
+                          
+                          areas.areaData[areas.selectArea].Objectives[selectObjective].Students.length <= 0 || areas.areaData[areas.selectArea].Objectives[selectObjective].Students === undefined? (
+                            <tr className="text-center">
+                              Data Not Found
+                            </tr>
+          
+                          ) : (
+                            areas.areaData[areas.selectArea].Objectives[selectObjective].Students.map((data, i) => {
+                                return (
+                                        <tr key={i}>
+                                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <i className="fas fa-arrow-up text-emerald-500 mr-4"></i>
+                                            {data.firstName}
+                                          </td>
+                                          <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                          <button className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                            x
+                                          </button>
+                                          </td>
+                                        </tr>
+                                    )
+                              })
+                          )
+                        )
+                      }
+                  </>
+
+                )
               }
             </tbody>
           </table>

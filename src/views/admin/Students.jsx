@@ -32,10 +32,10 @@ export default function Students() {
                 <ModalUnenrollStudent />
             </div>
 
-            <div class="accordion mb-2" id="studentProfileParent">
-              <div class="accordion-item bg-white border border-gray-200">
-                <h2 class="accordion-header mb-0" id="headingOne">
-                  <button class="
+            <div className="accordion mb-2" id="studentProfileParent">
+              <div className="accordion-item bg-white border border-gray-200">
+                <h2 className="accordion-header mb-0" id="headingOne">
+                  <button className="
                     accordion-button
                     relative
                     flex
@@ -54,9 +54,9 @@ export default function Students() {
                     Student Profile
                   </button>
                 </h2>
-                <div id="studentProfile" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+                <div id="studentProfile" className="accordion-collapse collapse hide" aria-labelledby="headingOne"
                   data-bs-parent="#studentProfileParent">
-                  <div class="flex flex-row accordion-body py-4 px-5">
+                  <div className="flex flex-row accordion-body py-4 px-5">
                     {
                       isStudent ? (
                         <DisplayStudent isStudent={isStudent} setIsStudent={setIsStudent} />
@@ -69,10 +69,10 @@ export default function Students() {
               </div>
             </div>
 
-            <div class="accordion mb-2" id="contactsParent">
-              <div class="accordion-item bg-white border border-gray-200">
-                <h2 class="accordion-header mb-0" id="headingOne">
-                  <button class="
+            <div className="accordion mb-2" id="contactsParent">
+              <div className="accordion-item bg-white border border-gray-200">
+                <h2 className="accordion-header mb-0" id="headingOne">
+                  <button className="
                     accordion-button
                     relative
                     flex
@@ -91,19 +91,19 @@ export default function Students() {
                     Contacts
                   </button>
                 </h2>
-                <div id="contacts" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+                <div id="contacts" className="accordion-collapse collapse hide" aria-labelledby="headingOne"
                   data-bs-parent="#contactsParent">
-                  <div class="accordion-body py-4 px-5">
+                  <div className="accordion-body py-4 px-5">
                     <FormContact />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="accordion mb-2" id="medicalInformationParent">
-              <div class="accordion-item bg-white border border-gray-200">
-                <h2 class="accordion-header mb-0" id="headingOne">
-                  <button class="
+            <div className="accordion mb-2" id="medicalInformationParent">
+              <div className="accordion-item bg-white border border-gray-200">
+                <h2 className="accordion-header mb-0" id="headingOne">
+                  <button className="
                     accordion-button
                     relative
                     flex
@@ -122,19 +122,19 @@ export default function Students() {
                     Medical Information
                   </button>
                 </h2>
-                <div id="medicalInformation" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+                <div id="medicalInformation" className="accordion-collapse collapse hide" aria-labelledby="headingOne"
                   data-bs-parent="#medicalInformationParent">
-                  <div class="accordion-body py-4 px-5">
+                  <div className="accordion-body py-4 px-5">
                     <MedicalInformation />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="accordion mb-2" id="allergiesParent">
-              <div class="accordion-item bg-white border border-gray-200">
-                <h2 class="accordion-header mb-0" id="headingOne">
-                  <button class="
+            <div className="accordion mb-2" id="allergiesParent">
+              <div className="accordion-item bg-white border border-gray-200">
+                <h2 className="accordion-header mb-0" id="headingOne">
+                  <button className="
                     accordion-button
                     relative
                     flex
@@ -153,19 +153,19 @@ export default function Students() {
                     Allergies
                   </button>
                 </h2>
-                <div id="allergies" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+                <div id="allergies" className="accordion-collapse collapse hide" aria-labelledby="headingOne"
                   data-bs-parent="#allergiesParent">
-                  <div class="accordion-body py-4 px-5">
+                  <div className="accordion-body py-4 px-5">
                     <FormAllergie />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="accordion" id="enrollmentParent">
-              <div class="accordion-item bg-white border border-gray-200">
-                <h2 class="accordion-header mb-0" id="headingOne">
-                  <button class="
+            <div className="accordion" id="enrollmentParent">
+              <div className="accordion-item bg-white border border-gray-200">
+                <h2 className="accordion-header mb-0" id="headingOne">
+                  <button className="
                     accordion-button
                     relative
                     flex
@@ -184,9 +184,9 @@ export default function Students() {
                     Enrollment
                   </button>
                 </h2>
-                <div id="enrollment" class="accordion-collapse collapse hide" aria-labelledby="headingOne"
+                <div id="enrollment" className="accordion-collapse collapse hide" aria-labelledby="headingOne"
                   data-bs-parent="#enrollmentParent">
-                  <div class="accordion-body py-4 px-5">
+                  <div className="accordion-body py-4 px-5">
                     <SetEnrollment />
                   </div>
                 </div>

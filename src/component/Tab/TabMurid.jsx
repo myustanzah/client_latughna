@@ -80,37 +80,45 @@ const Tabs = () => {
                 <div className={shoTypeTable === 1 ? "block" : "hidden"} id="link1">
 
                   {
-                    students.map((e, i) => {
-                      return (
-                          <button 
-                                key={i} 
-                                onClick={()=> handleSelectStudent(i)} 
-                                className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
-                                (selectStudents === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
-                                }>
-                                {e.firstName}
-                          </button>
-                      )
-                    })
+                    students.length < 1 ? (
+                      <button>Data Not Found</button>
+                    ) : (
+                        students.map((e, i) => {
+                          return (
+                              <button 
+                                    key={i} 
+                                    onClick={()=> handleSelectStudent(i)} 
+                                    className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
+                                    (selectStudents === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
+                                    }>
+                                    {e.firstName}
+                              </button>
+                          )
+                        })
+                    )
                   }
       
                 </div>
 
                 <div className={shoTypeTable === 2 ? "block" : "hidden"} id="link2">
                   {
-                    areas.areaData[areas.selectArea].Objectives.map((e, i) => {
-                      if(e.hide === false){
-                        return (
-                          <button key={i}
-                                  onClick={ ()=> handleSelectObjective(i)}
-                                  className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
-                                  (areas.selectObjective === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
+                    areas.areaData.length < 1 ? (
+                          <button>Data Not Found</button>
+                    ) : (
+                            areas.areaData[areas.selectArea].Objectives.map((e, i) => {
+                              if(e.hide === false){
+                                  return (
+                                    <button key={i}
+                                    onClick={ ()=> handleSelectObjective(i)}
+                                    className={"w-full hover:bg-blue-500 text-left font-semibold hover:text-white py-2 px-4 border hover:border-transparent " +
+                                    (areas.selectObjective === i ? "bg-blue-500 text-white" : "bg-transparent text-black" )
                                   }>
-                              {e.name}
-                          </button>
-                        )
-                      }
-                    })
+                                      {e.name}
+                                  </button>
+                                )
+                              }
+                            }) 
+                      )
                   }
                 </div>
 

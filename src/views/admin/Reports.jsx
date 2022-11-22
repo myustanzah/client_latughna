@@ -12,8 +12,8 @@ export default function DataSmp() {
           <div className="w-8/12 h-min flex flex-row">
             <div className="w-11/12 h-min flex items-center flex-col">
 
-                <div class="block p-6 mb-4 rounded-lg shadow-lg bg-white max-w-lg">
-                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Learning Objective Report</h5>
+                <div className="block p-6 mb-4 rounded-lg shadow-lg bg-white max-w-lg">
+                  <h5 className="text-gray-900 text-xl leading-tight font-medium mb-2">Learning Objective Report</h5>
                     <div className="h-min w-full p-3 bg-gray-200">
                       <table>
                         <tr>
@@ -21,13 +21,13 @@ export default function DataSmp() {
                             <label>After Date</label>
                           </td>
                           <td>
-                            <input type="date" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                           <td>
                             <label>Before Date</label>
                           </td>
                           <td>
-                            <input type="date" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                         </tr>
                       </table>
@@ -79,13 +79,13 @@ export default function DataSmp() {
                       </table>
                     </div>
                  <div className="w-full p-5 flex flex-row justify-between">
-                    <button type="button" class=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Reset Report</button>
-                    <button type="button" class=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Generate Report</button>
+                    <button type="button" className=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Reset Report</button>
+                    <button type="button" className=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Generate Report</button>
                  </div>
                 </div>
 
-                <div class="block p-6 mb-4 rounded-lg shadow-lg bg-white max-w-lg">
-                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Observations Report</h5>
+                <div className="block p-6 mb-4 rounded-lg shadow-lg bg-white max-w-lg">
+                  <h5 className="text-gray-900 text-xl leading-tight font-medium mb-2">Observations Report</h5>
                     <div className="h-min w-full p-3 bg-gray-200">
                       <table>
                         <tr>
@@ -93,13 +93,13 @@ export default function DataSmp() {
                             <label>After Date</label>
                           </td>
                           <td>
-                            <input type="date" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                           <td>
                             <label>Before Date</label>
                           </td>
                           <td>
-                            <input type="date" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                         </tr>
                       </table>
@@ -159,13 +159,13 @@ export default function DataSmp() {
                       </table>
                     </div>
                  <div className="w-full p-5 flex flex-row justify-between">
-                    <button type="button" class=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Reset Report</button>
-                    <button type="button" class=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Generate Report</button>
+                    <button type="button" className=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Reset Report</button>
+                    <button type="button" className=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Generate Report</button>
                  </div>
                 </div>
 
-                 <div class="block p-6 mb-4 rounded-lg shadow-lg bg-white max-w-lg">
-                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Progress Report</h5>
+                 <div className="block p-6 mb-4 rounded-lg shadow-lg bg-white max-w-lg">
+                  <h5 className="text-gray-900 text-xl leading-tight font-medium mb-2">Progress Report</h5>
                     <div className="h-min w-full p-3 bg-gray-200">
                       <table>
                         <tr>
@@ -173,26 +173,28 @@ export default function DataSmp() {
                             <label>After Date</label>
                           </td>
                           <td>
-                            <input type="date" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                           <td>
                             <label>Before Date</label>
                           </td>
                           <td>
-                            <input type="date" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                         </tr>
                       </table>
                     </div>
                       <div className="w-full h-min p-3 flex flex-row">
                         <label className="mr-5">Basis for assessment</label>
-                        <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
+                        <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+                                name="" id="">
                                 <option value="">Areas</option>
                         </select>
                       </div>
                       <div className="w-full h-min p-3 flex flex-row">
                         <label className="mr-5">Objective to include</label>
-                        <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
+                        <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+                                name="" id="">
                                 <option value="">Mastered Only</option>
                                 <option value="">Mastered or Practiced</option>
                                 <option value="">Mastered, Practiced Or, Presented</option>
@@ -220,8 +222,8 @@ export default function DataSmp() {
                       </table>
                     </div>
                  <div className="w-full flex flex-row justify-between">
-                    <button type="button" class=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Reset Report</button>
-                    <button type="button" class=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Generate Report</button>
+                    <button type="button" className=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Reset Report</button>
+                    <button type="button" className=" inline-block px-2 py-1 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Generate Report</button>
                  </div>
                 </div>
                 

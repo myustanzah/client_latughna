@@ -28,6 +28,7 @@ export default function Dashboard(){
                 <div className="w-full xl:w-5/12 mb-12 xl:mb-0 px-4">
                     <CardPageVisits />
                 </div>
+                
                 <div className="w-full xl:w-3/12 mb-12 xl:mb-0 px-4">
                     <CardAreaLessonPlans />
                 </div>

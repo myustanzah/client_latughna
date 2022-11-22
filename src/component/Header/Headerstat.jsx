@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import CardStats from "../Cards/CardStats";
 
 export default function HeaderStats() {
-  const currentUser = useSelector(state => state.UserReducer.userData.content.data.kodeUser)
+  const currentUser = useSelector(state => state.UserReducer.userData.kodeUser)
   const [backgroundUser, setBackgroundUser] = useState("")
 
   useEffect(()=>{

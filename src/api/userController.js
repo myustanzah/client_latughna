@@ -28,3 +28,20 @@ export async function userRegister(payload){
     })
     return result
 }
+
+export async function editUser(payload){
+    let result = await api({
+        method: 'POST',
+        url: `/user/edit/${payload.id}`,
+        data: payload.data
+    })
+    return result
+}
+
+export async function deleteUsers(payload){
+    let result = await api({
+        method: 'POST',
+        url: `/user/delete/${payload}`,
+    })
+    return result
+}
