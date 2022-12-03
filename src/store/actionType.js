@@ -20,3 +20,6 @@ export const SET_SELECT_OBJECTIVE = 'SET_SELECT_OBJECTIVE'
 
 // observation
 export const SET_OBSERVATION = 'SET_OBSERVATION'
+
+// lesson_plan
+export const SET_DATA_LESSON = 'SET_DATA_LESSON'

@@ -61,17 +61,20 @@ export default function Observation(){
         })
     }
 
-
-
+    function handleCancel(e){
+        e.preventDefault()
+        document.getElementById("form-observation").reset();
+    }
 
     return (
         <>
             <div className="flex flex-wrap mt-4">
                 <AddFormMurid />
-                    <div className="flex flex-col">
+                    <div className="w-8/12 flex flex-col">
                         <div className="flex">
                                 <form 
                                 onSubmit={handleObservation}
+                                id="form-observation"
                                 // encType="multipart/form-data" 
                                 // method="post" 
                                 // action="http://localhost:3009/observation/add" 
@@ -82,7 +85,7 @@ export default function Observation(){
                                     className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     ></textarea>
                                     <div className="mt-3">
-                                        <button className="mr-3">cancel</button>
+                                        <button className="mr-3" onClick={handleCancel} type="reset" value="Reset">cancel</button>
                                         <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                 type="submit"
                                                 value="Submit"

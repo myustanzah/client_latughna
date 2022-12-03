@@ -1,175 +1,54 @@
+
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import Table1 from "./ChiledTabLesson.jsx/Table1"
+import Table2 from "./ChiledTabLesson.jsx/Table2"
+import Table3 from "./ChiledTabLesson.jsx/Table3"
+
 export default function TabLessonPlan(){
+
+    const dataLesson = useSelector(state => state.LessonReducer.lessonData)
+    // const seeSelectData = useSelector(state => state.LessonReducer.selectLesson)
+    // const [dataToTable, setDataToTable] = useState([])
+
     return (
         <>
             <ul className="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0" id="tabs-tab"
                 role="tablist">
                 <li className="nav-item active" role="presentation">
-                    <a href="#tabs-home" className="active block rounded-t-lg font-medium text-xs leading-tight uppercase border-transparent px-6 py-3 text-white hover:border-transparent focus:bg-orange-300 focus:border-transparent active" 
-                    id="tabs-home-tab" data-bs-toggle="pill" data-bs-target="#tabs-home" role="tab" aria-controls="tabs-home"
+                    <a href="#tabs-home" 
+                    className="active block rounded-t-lg font-medium text-xs leading-tight uppercase border-transparent px-6 py-3 text-black hover:border-transparent bg-white focus:border-transparent" 
+                    id="tabs-home-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#tabs-home" 
+                    role="tab" 
+                    aria-controls="tabs-home"
                     aria-selected="true">My Plan - Student</a>
                 </li>
-                <li className="nav-item" role="presentation">
-                    <a href="#tabs-profile" className="block rounded-t-lg font-medium text-xs leading-tight uppercase border-transparent px-6 py-3 text-white hover:border-transparent focus:bg-orange-300 focus:border-transparent" 
-                    id="tabs-profile-tab" data-bs-toggle="pill" data-bs-target="#tabs-profile" role="tab"
-                    aria-controls="tabs-profile" aria-selected="false">My Plan - Area</a>
+                {/* <li className="nav-item" role="presentation">
+                    <a href="#tabs-profile" 
+                    className="block rounded-t-lg font-medium text-xs leading-tight uppercase border-transparent px-6 py-3 text-black hover:border-transparent focus:bg-white focus:border-transparent" 
+                    id="tabs-profile-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#tabs-profile" 
+                    role="tab"
+                    aria-controls="tabs-profile" 
+                    aria-selected="false">My Plan - Area</a>
                 </li>
                 <li className="nav-item" role="presentation">
-                    <a href="#tabs-messages" className="block rounded-t-lg font-medium text-xs leading-tight uppercase border-transparent px-6 py-3 text-white hover:border-transparent focus:bg-orange-300 focus:border-transparent" 
-                        id="tabs-messages-tab" data-bs-toggle="pill" data-bs-target="#tabs-messages" role="tab"
+                    <a href="#tabs-messages" 
+                    className="block rounded-t-lg font-medium text-xs leading-tight uppercase border-transparent px-6 py-3 text-black hover:border-transparent focus:bg-white focus:border-transparent" 
+                    id="tabs-messages-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#tabs-messages" 
+                    role="tab"
                     aria-controls="tabs-messages" aria-selected="false">My Plan - Objective</a>
-                </li>
+                </li> */}
             </ul>
             <div className="tab-content" id="tabs-tabContent">
-                <div className="tab-pane show active w-full h-auto bg-orange-300 p-10" id="tabs-home" role="tabpanel" aria-labelledby="tabs-home-tab">
-                    <div className="flex flex-col">
-                        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                            <div className="overflow-hidden">
-                                <table className="min-w-full">
-                                <thead className="border-b">
-                                    <tr>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Student
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Objective
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Progress
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Last Update
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Remove
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="border-b">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Dummy Test</td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            Dry Exploration
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex justify-between">
-                                            <input type="checkbox" />
-                                            <input type="checkbox" />
-                                            <input type="checkbox" />
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            22 - Oktober - 2022
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <button className="decoration-solid hover:text-white">DELETE</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                </table>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="tab-pane w-full h-auto bg-orange-300 p-10" id="tabs-profile" role="tabpanel" aria-labelledby="tabs-profile-tab">
-                    <div className="flex flex-col">
-                        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                            <div className="overflow-hidden">
-                                <table className="min-w-full">
-                                <thead className="border-b">
-                                    <tr>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Areas
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Objective
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Progress
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Last Update
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Remove
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="border-b">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Primary - Practical Life</td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            Dry Exploration
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex justify-between">
-                                            <input type="checkbox" />
-                                            <input type="checkbox" />
-                                            <input type="checkbox" />
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            22 - Oktober - 2022
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <button className="decoration-solid hover:text-white">DELETE</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                </table>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="tab-pane w-full h-auto bg-orange-300 p-10" id="tabs-messages" role="tabpanel" aria-labelledby="tabs-profile-tab">
-                    <div className="flex flex-col">
-                        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                            <div className="overflow-hidden">
-                                <table className="min-w-full">
-                                <thead className="border-b">
-                                    <tr>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Areas
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Objective
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Progress
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Last Update
-                                        </th>
-                                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                            Remove
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="border-b">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Primary - Practical Life</td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            Dummy Test
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex justify-between">
-                                            <input type="checkbox" />
-                                            <input type="checkbox" />
-                                            <input type="checkbox" />
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            22 - Oktober - 2022
-                                        </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <button className="decoration-solid hover:text-white">DELETE</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                </table>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Table1 data={dataLesson} />
+                <Table2 />
+                <Table3 />
             </div>
         </>
     )

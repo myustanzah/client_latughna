@@ -1,4 +1,5 @@
 import { getArea } from "../api/areaController";
+import { getIndexLessonPlan } from "../api/lessonPlanController";
 import { getObservation } from "../api/observationController";
 import { getStudent } from "../api/studentControler";
 import { getUser } from "../api/userController";
@@ -14,7 +15,8 @@ import {
     SET_SELECT_OBJECTIVE,
     SET_OBSERVATION,
     SET_LOADING,
-    SET_USER_LIST
+    SET_USER_LIST,
+    SET_DATA_LESSON
 } from "./actionType";
 
 
@@ -161,6 +163,25 @@ export function fungsiIndexArea(){
         .catch((error)=>{
             console.log(error)
         })
+    }
+}
+
+export function fungsiIndexLesson(payload){
+    return (dispatch, getState) => {
+        getIndexLessonPlan(payload)
+        .then((response)=>{
+            dispatch(fungsiStoreLesson(response.data.content))
+        })
+        .catch((error)=> {
+            console.log(error)
+        })
+    }
+}
+
+export function fungsiStoreLesson(input){
+    return {
+        type: SET_DATA_LESSON,
+        payload: input
     }
 }
 

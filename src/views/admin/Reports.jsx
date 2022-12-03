@@ -2,6 +2,7 @@ import React from "react";
 
 // Tab Murid
 import AddFormMurid from "../../component/Tab/AddFormMurid";
+import { handleNewDate } from "../../helper/handleDate";
 
 
 export default function DataSmp() {
@@ -21,13 +22,18 @@ export default function DataSmp() {
                             <label>After Date</label>
                           </td>
                           <td>
-                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input 
+                            type="date"
+                            // defaultValue={handleNewDate} 
+                            className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                           <td>
                             <label>Before Date</label>
                           </td>
                           <td>
-                            <input type="date" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                            <input 
+                            type="date" 
+                            className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                           </td>
                         </tr>
                       </table>

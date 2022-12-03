@@ -43,3 +43,17 @@ export async function deleteLessonPlan(payload){
     })
     return result
 }
+
+export async function getIndexLessonPlan(payload){
+    let result = await api({
+        method: 'POST',
+        url: '/lesson/index',
+        headers: {
+            token: localStorage.getItem('token')
+        },
+        data: {
+            filter: payload,
+        }
+    })
+    return result
+}

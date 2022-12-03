@@ -35,3 +35,42 @@ export async function getObservation(payload){
     })
     return result 
 }
+
+export async function editObservation(payload){
+    let result = await api({
+        method: 'PATCH',
+        url: `/observation/edit/${payload.id}`,
+        data: {
+            description: payload.description
+        },
+        headers: {
+            token: localStorage.getItem('token')
+        },
+    })
+    return result 
+}
+
+export async function deleteObservation(payload){
+    let result = await api({
+        method: 'DELETE',
+        url: `/observation/delete/${payload}`,
+        headers: {
+            token: localStorage.getItem('token')
+        },
+    })
+    return result 
+}
+
+export async function addComment(payload){
+    let result = await api({
+        method: 'POST',
+        url: `/comment/add/${payload.id}`,
+        data: {
+            description: payload.description
+        },
+        headers: {
+            token: localStorage.getItem('token')
+        },
+    })
+    return result 
+}

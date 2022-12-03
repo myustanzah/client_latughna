@@ -2,12 +2,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
-import { fungsiGetDataObservation, fungsiIndexUser, fungsiLogOut } from "../../store/actionCreator";
+import { useDispatch, useSelector } from "react-redux";
+import { fungsiGetDataObservation, fungsiIndexLesson, fungsiIndexUser, fungsiLogOut } from "../../store/actionCreator";
 
 export default function Sidebar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const selectFilterLesson = useSelector(state => state.LessonReducer.selectLesson)
 
   function setDataObservation(){
     dispatch(fungsiGetDataObservation())
