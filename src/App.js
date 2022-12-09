@@ -38,6 +38,7 @@ function App() {
       <Router>
           <Suspense fallback={<h1>Loading...</h1>}>
             <Routes>
+                <Route path='/' element={ <Navigate to="/auth" /> } />
                 <Route path='/auth' element={!items ? <Auth /> : <Navigate to="/admin/welcome"/>} />
                 <Route path='/forgot-password' element={!items ? <ForgotPassword /> : <Navigate to="/admin/welcome"/>} />
                 <Route exact path='/admin' element={items ? <Admin /> : <Navigate to="/auth" />}>

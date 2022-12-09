@@ -5,18 +5,23 @@ import { editStudent, uploadProfileStudent } from '../../../api/studentControler
 import { dateFormatymd, handleNewDate } from '../../../helper/handleDate'
 import { UniversalErrorResponse, UniversalSuccessResponse } from '../../../helper/UniversalResponse'
 import { fungsiIndexStudent } from '../../../store/actionCreator'
+import { url_image } from '../../../api/api'
+import { useEffect } from 'react'
 
 export default function FormStudent({isStudent, setIsStudent}) {
     const studentsData = useSelector(state => state.StudentReducer.studentData)
     const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
     const studentPhoto = useRef(null)
-    const [inputEditStudent, setInputEditStudent] = useState(studentsData[selectStudent])
+    const [inputEditStudent, setInputEditStudent] = useState({})
     const dispatch = useDispatch()
-    const url_image = 'http://localhost:3009/images'
 
     function handleIsStudent(){
         setIsStudent(true)
     }
+
+    useEffect(()=>{
+        setInputEditStudent(studentsData[selectStudent])
+    }, [studentsData[selectStudent]])
 
     function handleEditStudent(e){
         e.preventDefault()
@@ -29,7 +34,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
     }
 
     function handleSubmitEditStudent(){
-        console.log(studentPhoto.current.files[0])
+        
         let payload = {
             id: studentsData[selectStudent].id,
             data: inputEditStudent
@@ -63,6 +68,9 @@ export default function FormStudent({isStudent, setIsStudent}) {
               }
             UniversalErrorResponse(error.response.data.status, error.response.data.messages)
         })
+        .finally(()=>{
+            window.location.reload();
+        })
     }
 
 
@@ -77,7 +85,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                         </td>
                         <td>
                             <input type="text" 
-                            defaultValue={studentsData[selectStudent].firstName } 
+                            defaultValue={inputEditStudent.firstName } 
                             name="firstName"
                             onChange={handleEditStudent}
                             className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
@@ -91,7 +99,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                         <td>
                             <input 
                             type="text"
-                            defaultValue={studentsData[selectStudent].lastName } 
+                            defaultValue={inputEditStudent.lastName } 
                             onChange={handleEditStudent}
                             name="lastName"
                             className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
@@ -105,7 +113,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                         <td>
                             <input 
                             type="text"
-                            defaultValue={studentsData[selectStudent].nis } 
+                            defaultValue={inputEditStudent.nis ? inputEditStudent.nis : "" } 
                             onChange={handleEditStudent}
                             name="nis"
                             className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
@@ -119,7 +127,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                         <td>
                             <input 
                             type="text"
-                            defaultValue={studentsData[selectStudent].nisn } 
+                            defaultValue={inputEditStudent.nisn ? inputEditStudent.nisn : "" } 
                             onChange={handleEditStudent}
                             name="nisn"
                             className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
@@ -133,7 +141,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                         <td>
                             <select className="form-select appearance-none rounded block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
                                     name="gender"
-                                    defaultValue={studentsData[selectStudent].gender} 
+                                    defaultValue={inputEditStudent.gender ? inputEditStudent.gender : "1"} 
                                     onChange={handleEditStudent}
                                     >
                                 <option value="1">Male</option>
@@ -150,7 +158,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                             type="date"
                             onChange={handleEditStudent}
                             name="birthday"
-                            defaultValue={studentsData[selectStudent].birthday ? dateFormatymd(studentsData[selectStudent].birthday) : handleNewDate()}
+                            defaultValue={inputEditStudent.birthday ? dateFormatymd(inputEditStudent.birthday) : handleNewDate()}
                             className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                         </td>
                     </tr>
@@ -165,7 +173,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                                     rows="3"
                                     onChange={handleEditStudent}
                                     name="comment"
-                                    defaultValue={studentsData[selectStudent].comment}
+                                    defaultValue={inputEditStudent.comment ? inputEditStudent.comment : ""}
                                     placeholder="Your message"
                             ></textarea>
                         </td>
@@ -176,10 +184,10 @@ export default function FormStudent({isStudent, setIsStudent}) {
             <div className="w-2/6 flex flex-col space-y-4 items-center">
                 <div className="w-40 h-40 border flex items-center">
                     {
-                        !studentsData[selectStudent].imgProfil ? (
+                        !inputEditStudent.imgProfil ? (
                             <img src={require('../../../assets/Profile-Male-PNG.png')} alt="profil" />
                         ) : (
-                            <img src={`${url_image}/student/${studentsData[selectStudent].imgProfil}`} alt="profil" />
+                            <img src={`${url_image}/student/${inputEditStudent.imgProfil}`} alt="profil" />
                         )
                     }
                 </div>

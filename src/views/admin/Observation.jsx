@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fungsiGetDataObservation, fungsiUpdateData } from "../../store/actionCreator";
 import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
 import Loading from "../../component/Modal/Loading"
+// import { url_image } from "../../api/api";
 
 
 export default function Observation(){

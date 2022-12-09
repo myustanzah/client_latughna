@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux'
+import { url_image } from '../../../api/api'
 
 
 export default function DisplayStudent({isStudent, setIsStudent}){
     const studentsData = useSelector(state => state.StudentReducer.studentData)
     const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
-    const url_image = 'http://localhost:3009/images'
 
     function handleIsStudent(){
         setIsStudent(false)

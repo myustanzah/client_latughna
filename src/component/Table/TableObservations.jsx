@@ -12,10 +12,10 @@ import Loading from "../Modal/Loading";
 import ModalAddComment from "../Modal/ModalObservation/addComment";
 import ModalEditComment from "../Modal/ModalObservation/editComment";
 import ModalEditObs from "../Modal/ModalObservation/editObservation";
+import { url_image } from "../../api/api";
 
 function TableObservations() {
     const dataObservation = useSelector(state => state.ObservationReducer.observationData)
-    const url_image = 'http://localhost:3009/images'
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const [dataEditObs, setDataEditObs] = useState({})
