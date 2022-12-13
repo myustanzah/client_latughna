@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { editStudent, uploadProfileStudent } from '../../../api/studentControler'
 import { dateFormatymd, handleNewDate } from '../../../helper/handleDate'
 import { UniversalErrorResponse, UniversalSuccessResponse } from '../../../helper/UniversalResponse'
-import { fungsiIndexStudent } from '../../../store/actionCreator'
+import { fungsiAddContact, fungsiIndexStudent } from '../../../store/actionCreator'
 import { url_image } from '../../../api/api'
 import { useEffect } from 'react'
 
@@ -17,6 +17,11 @@ export default function FormStudent({isStudent, setIsStudent}) {
 
     function handleIsStudent(){
         setIsStudent(true)
+    }
+
+    function disableEdit(){
+        dispatch(fungsiAddContact(false))
+        window.location.reload()
     }
 
     useEffect(()=>{
@@ -195,7 +200,10 @@ export default function FormStudent({isStudent, setIsStudent}) {
                 <div>
                     <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={handleIsStudent}
+                            onClick={()=> {
+                                disableEdit()
+                                handleIsStudent()
+                            }}
                     >Cancel</button>
                     <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"

@@ -1,13 +1,19 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { url_image } from '../../../api/api'
+import { fungsiAddContact } from '../../../store/actionCreator'
 
 
 export default function DisplayStudent({isStudent, setIsStudent}){
     const studentsData = useSelector(state => state.StudentReducer.studentData)
     const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
+    const dispatch = useDispatch()
 
     function handleIsStudent(){
         setIsStudent(false)
+    }
+
+    function enableEdit(){
+        dispatch(fungsiAddContact(true))
     }
 
     return (
@@ -24,7 +30,10 @@ export default function DisplayStudent({isStudent, setIsStudent}){
             </div>
             <div className="">
                 <h1>NAMA STUDENT</h1><br />
-                <button onClick={handleIsStudent}><i className="fa-solid fa-pen-to-square"></i>Edit</button>
+                <button onClick={()=> {
+                    enableEdit()
+                    handleIsStudent()
+                }}><i className="fa-solid fa-pen-to-square"></i>Edit</button>
             </div>
         </div>
     )

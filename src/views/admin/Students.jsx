@@ -13,17 +13,25 @@ import SetEnrollment from "../../component/Accordion/Enrollment/Enrollment";
 // Modal
 import ModalDeleteStudent from "../../component/Modal/ModalDeleteStudent/DeleteStudent";
 import ModalUnenrollStudent from "../../component/Modal/ModalDeleteStudent/UnenrollStudent";
+import { useSelector } from "react-redux";
 
 
 
 export default function Students() {
 
   const [isStudent, setIsStudent] = useState(true)
+  const isEdit = useSelector(state => state.UtilReducer.isEdit)
 
   return (
     <>
       <div className="flex flex-wrap mt-4">
-          <AddFormMurid />
+        {
+          !isEdit ? (
+            <AddFormMurid />
+          ) : (
+            <></>
+          )
+        }
           <div className="w-3/5">
 
             <div className="w-full flex flex-row mb-3">
@@ -35,20 +43,7 @@ export default function Students() {
             <div className="accordion mb-2" id="studentProfileParent">
               <div className="accordion-item bg-white border border-gray-200">
                 <h2 className="accordion-header mb-0" id="headingOne">
-                  <button className="
-                    accordion-button
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-base text-gray-800 text-left
-                    bg-white
-                    border-0
-                    rounded-none
-                    transition
-                    focus:outline-none
+                  <button className="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none
                   " type="button" data-bs-toggle="collapse" data-bs-target="#studentProfile" aria-expanded="false"
                     aria-controls="studentProfile">
                     Student Profile
@@ -72,20 +67,7 @@ export default function Students() {
             <div className="accordion mb-2" id="contactsParent">
               <div className="accordion-item bg-white border border-gray-200">
                 <h2 className="accordion-header mb-0" id="headingOne">
-                  <button className="
-                    accordion-button
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-base text-gray-800 text-left
-                    bg-white
-                    border-0
-                    rounded-none
-                    transition
-                    focus:outline-none
+                  <button className="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none
                   " type="button" data-bs-toggle="collapse" data-bs-target="#contacts" aria-expanded="false"
                     aria-controls="contacts">
                     Contacts
@@ -103,21 +85,8 @@ export default function Students() {
             <div className="accordion mb-2" id="medicalInformationParent">
               <div className="accordion-item bg-white border border-gray-200">
                 <h2 className="accordion-header mb-0" id="headingOne">
-                  <button className="
-                    accordion-button
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-base text-gray-800 text-left
-                    bg-white
-                    border-0
-                    rounded-none
-                    transition
-                    focus:outline-none
-                  " type="button" data-bs-toggle="collapse" data-bs-target="#medicalInformation" aria-expanded="false"
+                  <button className="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none" 
+                    type="button" data-bs-toggle="collapse" data-bs-target="#medicalInformation" aria-expanded="false"
                     aria-controls="medicalInformation">
                     Medical Information
                   </button>
@@ -134,21 +103,8 @@ export default function Students() {
             <div className="accordion mb-2" id="allergiesParent">
               <div className="accordion-item bg-white border border-gray-200">
                 <h2 className="accordion-header mb-0" id="headingOne">
-                  <button className="
-                    accordion-button
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-base text-gray-800 text-left
-                    bg-white
-                    border-0
-                    rounded-none
-                    transition
-                    focus:outline-none
-                  " type="button" data-bs-toggle="collapse" data-bs-target="#allergies" aria-expanded="false"
+                  <button className="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none" 
+                    type="button" data-bs-toggle="collapse" data-bs-target="#allergies" aria-expanded="false"
                     aria-controls="allergies">
                     Allergies
                   </button>
@@ -165,21 +121,8 @@ export default function Students() {
             <div className="accordion" id="enrollmentParent">
               <div className="accordion-item bg-white border border-gray-200">
                 <h2 className="accordion-header mb-0" id="headingOne">
-                  <button className="
-                    accordion-button
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-base text-gray-800 text-left
-                    bg-white
-                    border-0
-                    rounded-none
-                    transition
-                    focus:outline-none
-                  " type="button" data-bs-toggle="collapse" data-bs-target="#enrollment" aria-expanded="false"
+                  <button className="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none" 
+                    type="button" data-bs-toggle="collapse" data-bs-target="#enrollment" aria-expanded="false"
                     aria-controls="enrollment">
                     Enrollment
                   </button>

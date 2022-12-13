@@ -4,6 +4,7 @@ import StudentReducer from './studentReducer'
 import AreaReducer from './areaReducer'
 import ObservationReducer from './observationReducer'
 import LessonReducer from './lessonReducer'
+import UtilReducer from './utilReducer'
 import { legacy_createStore as createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
@@ -14,13 +15,14 @@ const reducer = combineReducers({
     StudentReducer,
     AreaReducer,
     ObservationReducer,
-    LessonReducer
+    LessonReducer,
+    UtilReducer
 })
 const persistConfig = {
     key: 'root',
     storage: storage,
     whitelist: ['UserReducer', 'StudentReducer', 'AreaReducer', 'ObservationReducer'],
-    // blacklist: []
+    blacklist: ['UtilReducer']
   }
 
 const persistedReducer = persistReducer(persistConfig, reducer)

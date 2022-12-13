@@ -14,6 +14,9 @@ export const SET_ADD_AREA = 'SET_ADD_AREA'
 export const SET_STUDENT = 'SET_STUDENT'
 export const SET_SELECT_STUDENT = 'SET_SELECT_STUDENT'
 
+// student -> contact
+export const SET_IS_EDIT_CONTACT = 'SET_IS_EDIT_CONTACT'
+
 // objective
 export const SET_OBJECTIVE_AREA= 'SET_OBJECTIVE_AREA'
 export const SET_SELECT_OBJECTIVE = 'SET_SELECT_OBJECTIVE'

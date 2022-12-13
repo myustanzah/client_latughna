@@ -16,7 +16,8 @@ import {
     SET_OBSERVATION,
     SET_LOADING,
     SET_USER_LIST,
-    SET_DATA_LESSON
+    SET_DATA_LESSON,
+    SET_IS_EDIT_CONTACT
 } from "./actionType";
 
 
@@ -92,6 +93,13 @@ export function fungsiStoreStudent (input){
 export function fungsiSelectStudent (input){
     return {
         type: SET_SELECT_STUDENT,
+        payload: input
+    }
+}
+
+export function fungsiAddContact (input){
+    return {
+        type: SET_IS_EDIT_CONTACT,
         payload: input
     }
 }

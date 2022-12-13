@@ -74,3 +74,30 @@ export async function uploadProfileStudent(payload){
         return error
     }
 }
+
+export async function updateSessionStudent(payload){
+    let result = await api({
+        method: 'PUT',
+        url: `/student/session/${payload.id}`,
+        headers: {
+            token: localStorage.getItem('token')
+        },
+        data: {
+            data: payload.data
+        }
+    })
+
+    return result
+}
+
+export async function hardDeleteStudent(payload){
+    let result = await api({
+        method: 'DELETE',
+        url: `/student/delete/${payload.id}`,
+        headers: {
+            token: localStorage.getItem('token')
+        }
+    })
+
+    return result
+}

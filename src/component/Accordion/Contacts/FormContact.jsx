@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addContact, uploadProfileContact } from "../../../api/contactController"
 import { UniversalErrorResponse, UniversalSuccessResponse } from "../../../helper/UniversalResponse"
-import { fungsiIndexStudent } from "../../../store/actionCreator"
+import { fungsiIndexStudent, fungsiAddContact } from "../../../store/actionCreator"
 // import useFetchCountry from "../../../hooks/fecthCountry"
 import { url_image } from "../../../api/api"
 import { useRef } from "react"
@@ -12,8 +12,6 @@ export default function FormContact(){
 
     const contactPhoto = useRef(null)
     const [showFormContact, setShoeFormContact] = useState(false)
-    const [isEdit, setIsEdit] = useState(true)
-    const [imgProfile, setImageProfile] = useState(true)
     const [inputContact, setInputContact] = useState({
         firstName: "", 
         lastName: "",
@@ -31,10 +29,19 @@ export default function FormContact(){
         stateWork: "", 
         postalCodeWork: ""
     })
-    // const [dataCountry, loading] = useFetchCountry()
     const studentsData = useSelector(state => state.StudentReducer.studentData)
     const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
+    const isEdit = useSelector(state => state.UtilReducer.isEdit)
     const dispatch = useDispatch()
+    
+    function enableEdit(){
+        dispatch(fungsiAddContact(true))
+    }
+
+    function disableEdit(){
+        dispatch(fungsiAddContact(false))
+        window.location.reload()
+    }
 
     function handleInputContact(e) {
         e.preventDefault()
@@ -53,60 +60,64 @@ export default function FormContact(){
             data: inputContact
         }
         console.log(payload)
-        // addContact(payload)
-        // .then((response)=>{
-        //     if(response.data.status === 200 || response.data.status === 201){
-        //         if (contactPhoto.current.files[0]) {
-        //             let payload = {
-        //                 id: response.data.content.id,
-        //                 file: contactPhoto.current.files[0]
-        //             }
-        //             uploadProfileContact(payload)
-        //             .then((response)=>{
-        //                 console.log(response)
-        //                 dispatch(fungsiIndexStudent())
-        //             })
-        //             .catch((error)=>{
-        //                 console.log(error)
-        //             })
-        //         }
-        //         dispatch(fungsiIndexStudent())
-        //         UniversalSuccessResponse("Success", "Data berhasil diupdate")
-        //     } else {
-        //         UniversalErrorResponse("Error", JSON.stringify(response.data))
-        //     }
-        // })
-        // .catch((error)=>{
-        //     if (error.response === undefined) {
-        //         UniversalErrorResponse(503, "Your internet or server has offline")
-        //       }
-        //     UniversalErrorResponse(error.response.data.status, error.response.data.messages)
-        // })
+        addContact(payload)
+        .then((response)=>{
+            if(response.data.status === 200 || response.data.status === 201){
+                if (contactPhoto.current.files[0]) {
+                    let payload = {
+                        id: response.data.content.id,
+                        file: contactPhoto.current.files[0]
+                    }
+                    uploadProfileContact(payload)
+                    .then((response)=>{
+                        console.log(response)
+                        dispatch(fungsiIndexStudent())
+                    })
+                    .catch((error)=>{
+                        console.log(error)
+                    })
+                }
+                dispatch(fungsiIndexStudent())
+            } else {
+                UniversalErrorResponse("Error", JSON.stringify(response.data))
+            }
+        })
+        .catch((error)=>{
+            if (error.response === undefined) {
+                UniversalErrorResponse(503, "Your internet or server has offline")
+              }
+            UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+        })
+        .finally(()=>{
+            window.location.reload()
+        })
         
 
     }
 
     useEffect(()=>{
-        if(studentsData[selectStudent].Contact){
-            setInputContact(studentsData[selectStudent].Contact)
-        } else {
-            setInputContact({
-                firstName: "", 
-                lastName: "",
-                relationship: "", 
-                comment: "",
-                homePhone: "", 
-                mobilePhone: "",
-                email: "", 
-                homeAddress: "", 
-                city: "",
-                state: "", 
-                postalCode: "", 
-                workAddress: "",
-                cityWork: "", 
-                stateWork: "", 
-                postalCodeWork: ""
-            })
+        if (!isEdit) {
+            if(studentsData[selectStudent].Contact){
+                setInputContact(studentsData[selectStudent].Contact)
+            } else {
+                setInputContact({
+                    firstName: "", 
+                    lastName: "",
+                    relationship: "", 
+                    comment: "",
+                    homePhone: "", 
+                    mobilePhone: "",
+                    email: "", 
+                    homeAddress: "", 
+                    city: "",
+                    state: "", 
+                    postalCode: "", 
+                    workAddress: "",
+                    cityWork: "", 
+                    stateWork: "", 
+                    postalCodeWork: ""
+                })
+            }
         }
     }, [studentsData[selectStudent].Contact])
 
@@ -124,7 +135,8 @@ export default function FormContact(){
                                     </td>
                                     <td>
                                         <input onChange={handleInputContact} 
-                                        defaultValue={inputContact.firstName} 
+                                        defaultValue={inputContact.firstName}
+                                        // disabled={!isEdit}
                                         name="firstName" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
@@ -133,7 +145,12 @@ export default function FormContact(){
                                         <label className="mr-5">Last Name</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.lastName} name="lastName" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        defaultValue={inputContact.lastName}
+                                        // disabled={!isEdit}
+                                        name="lastName" type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -141,7 +158,13 @@ export default function FormContact(){
                                         <label className="mr-5">Relationship</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.relationship} name="relationship" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        defaultValue={inputContact.relationship} 
+                                        // disabled={!isEdit}
+                                        name="relationship" 
+                                        type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -156,6 +179,7 @@ export default function FormContact(){
                                     placeholder="Your message"
                                     onChange={handleInputContact}
                                     defaultValue={inputContact.comment}
+                                    // disabled={!isEdit}
                                     ></textarea>
                                     </td>
                                 </tr>
@@ -164,7 +188,13 @@ export default function FormContact(){
                                         <label className="mr-5">Home Phone</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.homePhone} name="homePhone" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        defaultValue={inputContact.homePhone} 
+                                        // disabled={!isEdit}
+                                        name="homePhone" 
+                                        type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>        
                                 <tr>
@@ -172,7 +202,13 @@ export default function FormContact(){
                                         <label className="mr-5">Mobile Phone</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.mobilePhone} name="mobilePhone" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        defaultValue={inputContact.mobilePhone} 
+                                        // disabled={!isEdit}
+                                        name="mobilePhone" 
+                                        type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -180,7 +216,13 @@ export default function FormContact(){
                                         <label className="mr-5">E-mail</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.email} name="email" type="email" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        // disabled={!isEdit}
+                                        defaultValue={inputContact.email} 
+                                        name="email" 
+                                        type="email" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -188,7 +230,12 @@ export default function FormContact(){
                                         <label className="mr-5">Home Address</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.homeAddress} name="homeAddress" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        defaultValue={inputContact.homeAddress} 
+                                        name="homeAddress" 
+                                        type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -196,7 +243,13 @@ export default function FormContact(){
                                         <label className="mr-5">City</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.city} name="city" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        defaultValue={inputContact.city} 
+                                        // disabled={!isEdit}
+                                        name="city" 
+                                        type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -204,9 +257,21 @@ export default function FormContact(){
                                         <label className="mr-5">State</label>
                                     </td>
                                     <td className="flex flex-row justify-between">
-                                        <input onChange={handleInputContact} defaultValue={inputContact.state} name="state" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        // disabled={!isEdit}
+                                        defaultValue={inputContact.state} 
+                                        name="state" 
+                                        type="text" 
+                                        className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                         <label>Postal Code</label>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.postalCode} name="postalCode" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        // disabled={!isEdit}
+                                        defaultValue={inputContact.postalCode} 
+                                        name="postalCode" 
+                                        type="text" 
+                                        className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
                                     </td>
                                 </tr>
                                 <tr>
@@ -214,7 +279,13 @@ export default function FormContact(){
                                         <label className="mr-5">Work Address</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.workAddress} name="workAddress" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        // disabled={!isEdit}
+                                        defaultValue={inputContact.workAddress} 
+                                        name="workAddress" 
+                                        type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -222,7 +293,13 @@ export default function FormContact(){
                                         <label className="mr-5">City</label>
                                     </td>
                                     <td>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.cityWork} name="cityWork" type="text" className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        // disabled={!isEdit}
+                                        defaultValue={inputContact.cityWork} 
+                                        name="cityWork" 
+                                        type="text" 
+                                        className="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -230,9 +307,21 @@ export default function FormContact(){
                                         <label className="mr-5">State</label>
                                     </td>
                                     <td className="flex flex-row justify-between">
-                                        <input onChange={handleInputContact} defaultValue={inputContact.stateWork} name="stateWork" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+                                        <input 
+                                        onChange={handleInputContact} 
+                                        // disabled={!isEdit}
+                                        defaultValue={inputContact.stateWork} 
+                                        name="stateWork" 
+                                        type="text" 
+                                        className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
                                         <label>Postal Code</label>
-                                        <input onChange={handleInputContact} defaultValue={inputContact.postalCodeWork} name="postalCodeWork" type="text" className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
+                                        <input 
+                                        onChange={handleInputContact}
+                                        // disabled={!isEdit} 
+                                        defaultValue={inputContact.postalCodeWork} 
+                                        name="postalCodeWork" 
+                                        type="text" 
+                                        className="form-control block w-4/12 px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />     
                                     </td>
                                 </tr>
                                 {/* <tr>
@@ -292,17 +381,28 @@ export default function FormContact(){
                                 )
                             }
                         </div>
-                        <input ref={contactPhoto} name="file_upload" type="file" className="rounded"/>
+                            <input 
+                            // disabled={!isEdit} 
+                            ref={contactPhoto} 
+                            name="file_upload" 
+                            type="file" 
+                            className="rounded"/>
 
                             <div>
-                                <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={()=> setShoeFormContact(false)}
-                                >Cancel</button>
-                                <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="submit"
-                                        onClick={submitInputContact}
-                                >Save</button>
+                                
+                                    <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={()=> {
+                                                disableEdit()
+                                                setShoeFormContact(false)
+                                                }
+                                            }
+                                    >Cancel</button>
+                                    <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="submit"
+                                            onClick={submitInputContact}
+                                    >Save</button>
+                                      
                             </div>
 
                         </div>
@@ -311,7 +411,9 @@ export default function FormContact(){
                 ) : (
                     <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="button"
-                            onClick={()=> setShoeFormContact(true)}
+                            onClick={()=> {
+                                enableEdit()
+                                setShoeFormContact(true)}}
                     >+ Add Contact</button>
                 )
             }

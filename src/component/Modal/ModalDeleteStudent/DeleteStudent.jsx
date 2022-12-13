@@ -1,7 +1,36 @@
 import React, {useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { hardDeleteStudent } from "../../../api/studentControler";
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../../helper/UniversalResponse";
+import { fungsiIndexStudent } from "../../../store/actionCreator";
 
 export default function ModalDeleteStudent() {
   const [showModal, setShowModal] = useState(false);
+  const studentsData = useSelector(state => state.StudentReducer.studentData)
+  const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
+  const dispatch = useDispatch()
+
+  function submitDeleteStudent(){
+    let payload = {
+      id: studentsData[selectStudent].id
+    }
+    hardDeleteStudent(payload)
+    .then((response) => {
+      if(response.data.status === 200){
+        UniversalSuccessResponse("Success", "Student hide success")
+        dispatch(fungsiIndexStudent())
+        setShowModal(false)
+      } else {
+        UniversalErrorResponse("Error", JSON.stringify(response.data))
+      }
+    })
+    .catch((error) => {
+      if (error.response === undefined) {
+        UniversalErrorResponse(503, "Your interner or server has offline")
+      }
+      UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    })
+  }
     
   return (
     <>
@@ -57,7 +86,11 @@ export default function ModalDeleteStudent() {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                        submitDeleteStudent() 
+                        setShowModal(false)
+                      }
+                    }
                   >
                     Save Changes
                   </button>
