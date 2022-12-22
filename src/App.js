@@ -9,6 +9,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // component
 import Notfound from './component/Notfound/NotFound';
+import Reporting from './component/Report/Reporting';
 
 // views
 import Dashboard from './views/admin/Dashboard';
@@ -21,6 +22,9 @@ import LessonPlan from './views/admin/LessonPlan';
 import Welcome from './views/admin/Welcome';
 import Users from './views/admin/Users';
 import ForgotPassword from './views/auth/ForgotPassword';
+
+// import Auth from './layouts/Auth';
+// import Admin from './layouts/Admin';
 
 
 // Layouts
@@ -38,7 +42,7 @@ function App() {
       <Router>
           <Suspense fallback={<h1>Loading...</h1>}>
             <Routes>
-                <Route path='/' element={ <Navigate to="/auth" /> } />
+                {/* <Route path='/' element={ <Navigate to="/auth" /> } /> */}
                 <Route path='/auth' element={!items ? <Auth /> : <Navigate to="/admin/welcome"/>} />
                 <Route path='/forgot-password' element={!items ? <ForgotPassword /> : <Navigate to="/admin/welcome"/>} />
                 <Route exact path='/admin' element={items ? <Admin /> : <Navigate to="/auth" />}>
@@ -52,6 +56,7 @@ function App() {
                     <Route path='myaccount' element={items ? <MyAccount/> : <Navigate to="/auth" />} />
                     <Route path='users' element={items ? <Users/> : <Navigate to="/auth" />} />
                 </Route>
+                <Route path='report' element={<Reporting/>} />
                 <Route path='*' element={<Notfound />} />
             </Routes>
           </Suspense>

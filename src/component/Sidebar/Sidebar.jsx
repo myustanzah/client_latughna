@@ -3,12 +3,13 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fungsiGetDataObservation, fungsiIndexLesson, fungsiIndexUser, fungsiLogOut } from "../../store/actionCreator";
+import { fungsiGetDataObservation, fungsiIndexUser, setLogOut } from "../../store/actionCreator";
 
 export default function Sidebar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const selectFilterLesson = useSelector(state => state.LessonReducer.selectLesson)
+  // const selectFilterLesson = useSelector(state => state.LessonReducer.selectLesson)
+  const checkStudent = useSelector(state => state.StudentReducer.studentData)
 
   function setDataObservation(){
     dispatch(fungsiGetDataObservation())
@@ -16,8 +17,8 @@ export default function Sidebar() {
 
 
   const handleLogout = () => {
-    localStorage.removeItem("token")
-    dispatch(fungsiLogOut(false))
+    dispatch(setLogOut())
+    localStorage.clear()
     navigate("/auth")
   }
 
@@ -140,18 +141,22 @@ export default function Sidebar() {
                   Attendance
                 </Link>
               </li>
-
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                <Link
-                  className={"text-xs uppercase py-3 font-bold block "}
-                  to="/admin/student"
-                >
-                  <i className={"fas fa-solid fa-graduation-cap mr-2 text-sm "}
-                  ></i>{" "}
-                  Students
-                </Link>
-              </li>
-
+                    {
+                      checkStudent.length == 0 ? (
+                        <></>
+                      ) : (
+                      <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                        <Link
+                          className={"text-xs uppercase py-3 font-bold block "}
+                          to="/admin/student"
+                        >
+                          <i className={"fas fa-solid fa-graduation-cap mr-2 text-sm "}
+                          ></i>{" "}
+                          Students
+                        </Link>
+                      </li>
+                      )
+                    }
               <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
                 <Link
                   className={"text-xs uppercase py-3 font-bold block "}

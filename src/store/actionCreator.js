@@ -17,7 +17,8 @@ import {
     SET_LOADING,
     SET_USER_LIST,
     SET_DATA_LESSON,
-    SET_IS_EDIT_CONTACT
+    SET_IS_EDIT_CONTACT,
+    SET_SHOW_REPORT
 } from "./actionType";
 
 
@@ -26,6 +27,22 @@ export function fungsiLogin (input){
     return {
         type: SET_LOGIN,
         payload: input
+    }
+}
+
+export function setLogOut(){
+    return (dispatch, getState) => {
+        dispatch(fungsiLogOut(false))
+        dispatch(fungsiDataUser(null))
+        dispatch(fungsiUserList([]))
+        dispatch(fungsiShowDataStudentOrObjective(1))
+        dispatch(fungsiStoreStudent([]))
+        dispatch(fungsiSelectStudent(0))
+        dispatch(fungsiStoreArea([]))
+        dispatch(fungsiShowObjective(0))
+        dispatch(fungsiSelectObjective(0))
+        dispatch(fungsiSetDataObservation([]))
+        dispatch(fungsiStoreLesson([]))
     }
 }
 

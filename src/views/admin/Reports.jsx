@@ -1,11 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // Tab Murid
 import AddFormMurid from "../../component/Tab/AddFormMurid";
 import { handleNewDate } from "../../helper/handleDate";
 
 
-export default function DataSmp() {
+export default function DataReports() {
+
+
+  function handleSetReport(input){
+    localStorage.removeItem("show_type_report")
+    localStorage.setItem("show_type_report", input)
+    window.open("/report", "_blank")
+  }
+
+
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -110,16 +120,6 @@ export default function DataSmp() {
                         </tr>
                       </table>
                     </div>
-                      {/* <div className="w-full h-min p-3 flex flex-row">
-                        <label className="mr-5">Objective to include</label>
-                        <select className="form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
-                                <option value="">Presented Only</option>
-                                <option value="">Presented Or Practiced</option>
-                                <option value="">Presented, Practiced Or Mastered</option>
-                                <option value="">Mastered Only</option>
-                                <option value="">All Objective</option>
-                        </select>
-                      </div> */}
                     <div className="w-full h-min p-3">
                       <table>
                           <tr>
@@ -242,35 +242,53 @@ export default function DataSmp() {
                     </td>
                   </tr>
                   <div className="text-sky-400 pl-2">
-                    <tr className="border-b">
+                    {/* <tr className="border-b">
                       <td>
                         <a href="#">Class List</a>
                       </td>
-                    </tr>
+                    </tr> */}
                     <tr className="border-b">
                       <td>
-                        <a href="#">Student Contact List</a>
+                        <Link
+                          onClick={(e)=> {
+                            e.preventDefault()
+                            handleSetReport("contact_list")
+                          }} 
+                          
+                          target={"_blank"}>Student Contact List</Link>
                       </td>
                     </tr>
                     <tr className="border-b">
                       <td>
-                        <a href="#">Birthday List</a>
+                        <Link 
+                          onClick={(e)=> {
+                            e.preventDefault()
+                            handleSetReport("birthday_list")
+                          }}
+                          
+                          target={"_blank"}>Birthday List</Link>
                       </td>
                     </tr>
                     <tr className="border-b">
                       <td>
-                        <a href="#">Allergy List</a>
+                        <Link 
+                          onClick={(e)=> {
+                            e.preventDefault()
+                            handleSetReport("alergy_list")
+                          }}
+                          
+                          target={"_blank"}>Allergy List</Link>
                       </td>
                     </tr>
                   </div>
 
-                  <tr className="border-b">
+                  {/* <tr className="border-b">
                     <td>
                       <h1 className="text-lg">Administrative Reports</h1>
                     </td>
-                  </tr>
+                  </tr> */}
 
-                  <div className="text-sky-400 pl-2">
+                  {/* <div className="text-sky-400 pl-2">
                     <tr className="border-b">
                       <td>
                         <a href="#">Daily Attendance</a>
@@ -286,9 +304,8 @@ export default function DataSmp() {
                         <a href="#">Enrollment Numbers</a>
                       </td>
                     </tr>
-                  </div>
+                  </div> */}
                 </table>
-
             </div>
           </div>
       </div>
