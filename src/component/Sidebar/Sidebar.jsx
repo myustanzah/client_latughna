@@ -8,8 +8,9 @@ import { fungsiGetDataObservation, fungsiIndexUser, setLogOut } from "../../stor
 export default function Sidebar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // const selectFilterLesson = useSelector(state => state.LessonReducer.selectLesson)
+  const userData = useSelector(state => state.UserReducer.userData)
   const checkStudent = useSelector(state => state.StudentReducer.studentData)
+
 
   function setDataObservation(){
     dispatch(fungsiGetDataObservation())
@@ -128,33 +129,36 @@ export default function Sidebar() {
                   Observations
                 </Link>
               </li>
-
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block "}
-                  to="/admin/attendant"
-                >
-                  <i
-                    className={"fas fa-solid fa-clipboard-user mr-2 text-sm "}
-                  ></i>{" "}
-                  Attendance
-                </Link>
-              </li>
                     {
                       checkStudent.length == 0 ? (
                         <></>
                       ) : (
-                      <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                        <Link
-                          className={"text-xs uppercase py-3 font-bold block "}
-                          to="/admin/student"
-                        >
-                          <i className={"fas fa-solid fa-graduation-cap mr-2 text-sm "}
-                          ></i>{" "}
-                          Students
-                        </Link>
-                      </li>
+                        <>
+                          <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                            <Link
+                              className={
+                                "text-xs uppercase py-3 font-bold block "}
+                              to="/admin/attendant"
+                            >
+                              <i
+                                className={"fas fa-solid fa-clipboard-user mr-2 text-sm "}
+                              ></i>{" "}
+                              Attendance
+                            </Link>
+                          </li>
+
+                          <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                            <Link
+                              className={"text-xs uppercase py-3 font-bold block "}
+                              to="/admin/student"
+                            >
+                              <i className={"fas fa-solid fa-graduation-cap mr-2 text-sm "}
+                              ></i>{" "}
+                              Students
+                            </Link>
+                          </li>
+                        
+                        </>
                       )
                     }
               <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
@@ -189,18 +193,22 @@ export default function Sidebar() {
                   My Account
                 </Link>
               </li>
-
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                <Link
-                  className={"text-xs uppercase py-3 font-bold block "}
-                  to="/admin/users"
-                  onClick={handleUsers}
-                >
-                  <i className={"fa-solid fa-user-plus mr-2 text-sm"} ></i>{" "}
-                  Users
-                </Link>
-              </li>
-
+                {
+                  userData.email === 'superadmin@mail.com' ? (
+                    <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                      <Link
+                        className={"text-xs uppercase py-3 font-bold block "}
+                        to="/admin/users"
+                        onClick={handleUsers}
+                      >
+                        <i className={"fa-solid fa-user-plus mr-2 text-sm"} ></i>{" "}
+                        Users
+                      </Link>
+                    </li>
+                  ) : (
+                    <></>
+                  )
+                }
             </ul>
             <Link to="/auth">
               <button type="button" onClick={handleLogout} className="absolute bottom-0 mb-2 w-full inline-block px-6 py-2.5 bg-cyan-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">

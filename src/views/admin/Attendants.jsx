@@ -1,10 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { storeSession } from "../../api/studentControler";
+import Loading from "../../component/Modal/Loading";
 
 // components
 import AddFormMurid from "../../component/Tab/AddFormMurid";
 import { dateFormatymd, getDays, handleNewDate } from "../../helper/handleDate";
+import { UniversalErrorResponse } from "../../helper/UniversalResponse";
+import { fungsiIndexStudent } from "../../store/actionCreator";
 
 export default function Attendants() {
 
@@ -17,19 +21,95 @@ export default function Attendants() {
     "absent": false,
     "tardy": false
   })
+  const [comment, setComment] = useState([])
   const [att, setAtt] = useState([])
+  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
 
-  function handleSubmit(e, i){
+function handleSubmit(e, id){
     
-
-    let set = {
-        idSession: i,
-        [e.target.name]: e.target.checked
+    let inputAbsen = {
+        present: false,
+        absent: false,
+        tardy: false,
+        comment: ""
     }
 
-    console.log(set)
-
+    
+    if (att.length === 0) {
+        inputAbsen.idSession = id
+        inputAbsen[e.target.name] = e.target.checked
+        
+        att.push(inputAbsen)
+    } else {
+        for (let i = 0; i < att.length; i++) {
+           if (att[i].idSession === id) {
+                att[i][e.target.name] = e.target.checked
+           } else {
+                inputAbsen.idSession = id
+                inputAbsen[e.target.name] = e.target.checked
+                
+            }
+        }
+        att.push(inputAbsen)
+    }
   }
+
+  function handleComment(e, id){
+
+    let inputAbsen = {
+        comment: ""
+    }
+
+    if (att.length === 0) {
+        inputAbsen.idSession = id
+        inputAbsen[e.target.name] = e.target.value
+        
+        comment.push(inputAbsen)
+    } else {
+        for (let i = 0; i < comment.length; i++) {
+           if (comment[i].idSession === id) {
+                comment[i][e.target.name] = e.target.value
+           } else {
+                inputAbsen.idSession = id
+                inputAbsen[e.target.name] = e.target.value
+                
+            }
+        }
+        comment.push(inputAbsen)
+    }
+  }
+
+  function submitAbsen(){
+
+    setLoading(true)
+    setTimeout(()=>{
+        setLoading(false)
+    }, 5000)
+
+    //   storeSession(att)
+    //   .then((response)=>{
+    //         if(response.data.status === 200){
+    //           dispatch(fungsiIndexStudent())
+    //         } else {
+    //             UniversalErrorResponse("Error", JSON.stringify(response.data))
+    //         }
+    //   })
+    //   .catch((error)=>{
+    //       if (error.response === undefined) {
+    //           UniversalErrorResponse(503, "Your interner or server has offline")
+    //         }
+    //         UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    //   })
+    //   .finally(()=>{
+    //       setTimeout(()=>{
+    //           setLoading(false)
+    //         }, 5000)
+    //   })
+  }
+
+    
+  
 
   function handleFilterDate(e){
     e.preventDefault()
@@ -140,7 +220,7 @@ export default function Attendants() {
                                                                     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                                         <input
                                                                             defaultValue=""
-                                                                            onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                            onChange={(subs)=> handleComment(subs, e.id)}
                                                                             name="comment"
                                                                             type="text" />
                                                                     </td>
@@ -152,7 +232,7 @@ export default function Attendants() {
                                                                     if (dateFormatymd(l.createdAt) === fillDate) {
                                                                         return (
                                                                             <>
-                                                                                <td className="flex space-x-4 items-center text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                                                <td key={l.id} className="flex space-x-4 items-center text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                                                     <input
                                                                                         defaultChecked={l.present} 
                                                                                         name="present"
@@ -178,7 +258,7 @@ export default function Attendants() {
                                                                                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                                                     <input
                                                                                      defaultValue={l.comment} 
-                                                                                     onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                                     onChange={(subs)=> handleComment(subs, e.id)}
                                                                                      name="comment"
                                                                                      type="text" />
                                                                                 </td>  
@@ -213,7 +293,7 @@ export default function Attendants() {
                                                                                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                                                     <input
                                                                                      defaultValue=""
-                                                                                     onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                                     onChange={(subs)=> handleComment(subs, e.id)}
                                                                                      name="comment"
                                                                                      type="text" />
                                                                                 </td>
@@ -237,11 +317,18 @@ export default function Attendants() {
                     </table>
                     <div className="flex justify-center items-center w-full pb-8">
                         <button
-                         onClick={handleSubmit}
+                         onClick={submitAbsen}
                          className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                          type="button">Save</button>
                     </div>
           </div>
+          {
+            loading ? (
+                <Loading />
+            ) : (
+                <></>
+            )
+          }
       </div>
     </>
   );

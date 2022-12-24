@@ -10,6 +10,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 // component
 import Notfound from './component/Notfound/NotFound';
 import Reporting from './component/Report/Reporting';
+import ReportingForm from './component/Report/ReportingForm';
 
 // views
 import Dashboard from './views/admin/Dashboard';
@@ -57,6 +58,7 @@ function App() {
                     <Route path='users' element={items ? <Users/> : <Navigate to="/auth" />} />
                 </Route>
                 <Route path='report' element={<Reporting/>} />
+                <Route path='report-form' element={<ReportingForm/>} />
                 <Route path='*' element={<Notfound />} />
             </Routes>
           </Suspense>

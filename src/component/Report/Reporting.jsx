@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { dateFormat } from "../../helper/handleDate"
 import HeaderReport from "../Header/HeaderReport"
 
-export default function Reporting(){
+export default function ReportingForm(){
     const students = useSelector(state => state.StudentReducer.studentData)
     const showTypeReport = localStorage.getItem("show_type_report")
     useEffect(()=>{

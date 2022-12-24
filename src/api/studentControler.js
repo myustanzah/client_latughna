@@ -101,3 +101,18 @@ export async function hardDeleteStudent(payload){
 
     return result
 }
+
+export async function storeSession(payload){
+    let result = await api({
+        method: 'POST',
+        url: '/session/attendance',
+        headers: {
+            token: localStorage.getItem('token')
+        },
+        data: {
+            data: payload
+        }
+    })
+
+    return result
+}

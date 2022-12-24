@@ -94,7 +94,7 @@ export default function CardAreaLessonPlans() {
                       {
                         shoTypeTable === 1 ? (
 
-                          selectStudentData[selectIndexStudent].Objectives.length <= 0 ? (
+                          selectStudentData[selectIndexStudent].Objectives.length === 0 ? (
                             <tr className="text-center">
                               Data Not Found
                             </tr>
@@ -120,7 +120,7 @@ export default function CardAreaLessonPlans() {
 
                         ) : (
                           
-                          areas.areaData[areas.selectArea].Objectives[selectObjective].Students.length <= 0 || areas.areaData[areas.selectArea].Objectives[selectObjective].Students === undefined? (
+                          areas.areaData[areas.selectArea].Objectives[selectObjective].Students.length === 0 || areas.areaData[areas.selectArea].Objectives[selectObjective].Students === undefined ? (
                             <tr className="text-center">
                               Data Not Found
                             </tr>
