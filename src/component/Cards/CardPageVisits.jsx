@@ -22,27 +22,10 @@ export default function CardPageVisits() {
   const areas = useSelector(state => state.AreaReducer)
   const students = useSelector(state => state.StudentReducer)
   const shoTypeTable = useSelector(state => state.UserReducer.cardPageVisit)
-
   const [selectObjectives, setSelectObjective] = useState(0)
-  const [dataStudent, setDataStudent] = useState([])
   const [dataWorks, setWorks] = useState([])
 
-  useEffect(()=>{
-    let setStudent = []
-    if (students.studentData.length >= 1) {
-      students.studentData.forEach((e, i) => {
-        let temp = {
-          id : e.id,
-          name : e.firstName,
-          progress : "",
-          lastUpdate : dateFormat(e.updatedAt)
-        }
-        setStudent.push(temp)
-      });
-      setDataStudent(setStudent)
-    }
-
-  }, [])
+  
 
   useEffect(()=>{
     let setArea = []
@@ -105,7 +88,7 @@ export default function CardPageVisits() {
             </div>
             <div className="flex relative w-full justify-start px-4 max-w-full mt-2">
               <ModalAddWork />
-              {/* <ModalQuickEntry /> */}
+              <ModalQuickEntry />
               <ModalOrganizeArea />
               <ModalArea />
             </div>
@@ -117,7 +100,7 @@ export default function CardPageVisits() {
             shoTypeTable === 1 ? (
               <Table data={dataWorks} showTypeTable={shoTypeTable} />
             ) : (
-              <Table data={dataStudent} showTypeTable={shoTypeTable} />
+              <Table data={students.studentData} showTypeTable={shoTypeTable} />
             )
           }
         </div>

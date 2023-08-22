@@ -1,17 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addLessonPlan } from "../../api/lessonPlanController"
 import { hideObjective } from "../../api/objectiveController"
 import { UniversalErrorResponse } from "../../helper/UniversalResponse"
 import { fungsiIndexArea, fungsiIndexStudent } from "../../store/actionCreator"
 import Loading from "../Modal/Loading"
+import { dateFormat } from "../../helper/handleDate"
 
 export default function Table(props){
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
   const studentId = useSelector(state => state.StudentReducer.studentData[selectStudent])
-  
+  const studentDataType = useSelector(state => state.StudentReducer)
+
   function submitHideObjective(value){
 
     setLoading(true)
@@ -146,15 +148,14 @@ export default function Table(props){
 
                         })
                       ) : (
-                        props.data.map((e) => {
-                      return (
-
+                        studentDataType.studentData.map((e) => {
+                          return (
                                 <tr key={e.id}>
                                   <td>
                                       <></>                                        
                                   </td>
                                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    {e.name}
+                                    {e.firstName}
                                   </td>
                                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     <div className="flex flex-nowrap justify-between">
@@ -164,7 +165,7 @@ export default function Table(props){
                                     </div>
                                   </td>
                                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    {e.lastUpdate}
+                                    {dateFormat(e.updatedAt)}
                                   </td>
                                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                   <button className="bg-sky-600 text-white active:bg-lightBlue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">

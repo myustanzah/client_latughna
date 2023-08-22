@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLessonPlan } from "../../api/lessonPlanController";
 import { UniversalErrorResponse } from "../../helper/UniversalResponse";
-import { fungsiIndexArea } from "../../store/actionCreator";
+import { fungsiIndexArea, fungsiIndexStudent } from "../../store/actionCreator";
 import Loading from "../Modal/Loading";
 
 // components
@@ -19,7 +19,7 @@ export default function CardAreaLessonPlans() {
 
   const submitDeleteLessonArea = (value) => {
     let payload = {
-      studentId: selectStudentData.id,
+      studentId: +selectStudentData[selectIndexStudent].id,
       objectiveId: value
     }
     setLoading(true)
@@ -28,6 +28,7 @@ export default function CardAreaLessonPlans() {
       if (loading === false) {
         if(response.data.status === 200){
           dispatch(fungsiIndexArea())
+          dispatch(fungsiIndexStudent())
         } else {
           UniversalErrorResponse("Error", JSON.stringify(response.data))
         }
@@ -42,7 +43,7 @@ export default function CardAreaLessonPlans() {
     .finally(()=>{
       setTimeout(()=>{
         setLoading(false)
-      }, 5000)
+      }, 2000)
     })
   }
 
@@ -120,7 +121,7 @@ export default function CardAreaLessonPlans() {
 
                         ) : (
                           
-                          areas.areaData[areas.selectArea].Objectives[selectObjective].Students.length === 0 || areas.areaData[areas.selectArea].Objectives[selectObjective].Students === undefined ? (
+                          areas.areaData[areas.selectArea].Objectives.length === 0 || areas.areaData[areas.selectArea].Objectives[selectObjective].Students.length === 0 ? (
                             <tr className="text-center">
                               Data Not Found
                             </tr>

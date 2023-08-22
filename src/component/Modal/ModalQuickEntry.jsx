@@ -2,10 +2,48 @@ import React, {useState} from "react";
 
 // helper
 import { handleNewDate } from "../../helper/handleDate";
+import { useDispatch, useSelector } from "react-redux";
+import { storeQuickEntry } from "../../api/lessonPlanController";
+import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
+import { fungsiIndexArea, fungsiIndexStudent } from "../../store/actionCreator";
 
 export default function Modal() {
+  
   const [showModal, setShowModal] = useState(false);
+  const students = useSelector(state => state.StudentReducer)
+  const areas = useSelector(state => state.AreaReducer)
+  const [selectArea, setSelectArea] = useState(0)
+  const [dataSubmit, setDataSubmit] = useState({})
+  const dispatch = useDispatch();
     
+  function submitQuickEntry(){
+    storeQuickEntry(dataSubmit)
+    .then((response)=>{
+      console.log(response)
+        if(response.data.status === 200){
+          dispatch(fungsiIndexArea())
+          dispatch(fungsiIndexStudent())
+          UniversalSuccessResponse("Success", "Data berhasil ditambahkan")
+        } else {
+          UniversalErrorResponse("Error", JSON.stringify(response.data))
+        }
+      
+    })
+    .catch((error)=>{
+      if (error.response === undefined) {
+        UniversalErrorResponse(503, "Your internet or server has offline")
+      }
+      UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+    })
+  }
+
+  function handleProgress(e){
+    setDataSubmit({
+      ...dataSubmit,
+      progress: +e.target.value
+    })
+  }
+
   return (
     <>
       <button
@@ -55,15 +93,47 @@ export default function Modal() {
                         <label className="mb-4 mr-9">Students </label>
                       </td>
                       <td>
-                        <textarea className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        <select className="w-64 mb-10 form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
+                        {
+                          students.studentData.map((student) => {
+                            return(
+                              <option key={student.id} value={student.id} onClick={()=> setDataSubmit({ ...dataSubmit, studentId: student.id })} >{student.firstName + " " + student.lastName}</option>
+                            )
+                          })
+                        }
+                        </select>
                       </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <label className="mb-4 mr-14">Mata pelajaran </label>
+                        </td>
+                        <td>
+                          <select className="w-64 mb-10 form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
+                          {
+                            areas.areaData.map((area, i) => {
+                              return(
+                                <option key={area.id} value={area.id} onClick={ () => { setSelectArea(i) }}>{area.name}</option>
+                              )
+                            })
+                          }
+                          </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>
                           <label className="mb-4 mr-14">Objective </label>
                         </td>
                         <td>
-                          <input type="text" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                          <select className="w-64 mb-10 form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
+                            {
+                              areas.areaData[selectArea].Objectives.map((obj) => {
+                                return(
+                                  <option key={obj.id} value={obj.id} onClick={() => setDataSubmit({ ...dataSubmit, objectiveId: obj.id })} >{obj.name}</option>
+                                )
+                              })
+                            }
+                            </select>
                         </td>
                     </tr>
                     
@@ -74,7 +144,11 @@ export default function Modal() {
                         <label className="mb-4 mr-9">Progress </label>
                       </td>
                       <td>
-                        <input type="text" className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                        <select name="" id="">
+                          <option value="1" onClick={handleProgress}>Beginner</option>
+                          <option value="2" onClick={handleProgress}>Middle</option>
+                          <option value="3" onClick={handleProgress}>Advance</option>
+                        </select>
                       </td>
                     </tr>
                     <tr>
@@ -82,7 +156,7 @@ export default function Modal() {
                           <label className="mb-4 mr-5">Comments </label>
                         </td>
                         <td>
-                          <textarea className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
+                          <textarea onChange={(e)=> setDataSubmit({ ...dataSubmit, comment: e.target.value })} className="px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline"/><br /><br />
                         </td>
                     </tr>
                   </tbody>
@@ -121,7 +195,10 @@ export default function Modal() {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => { 
+                      setShowModal(false)
+                      submitQuickEntry()
+                    }}
                   >
                     Save Changes
                   </button>

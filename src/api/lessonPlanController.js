@@ -57,3 +57,19 @@ export async function getIndexLessonPlan(payload){
     })
     return result
 }
+
+export async function storeQuickEntry(payload){
+    let result = await api({
+        method: 'POST',
+        url: '/lesson/quick',
+        headers: {
+            token: localStorage.getItem('token')
+        },
+        data: {
+            studentId: payload.studentId,
+            objectiveId: payload.objectiveId,
+            comment: payload.comment,
+            progress: payload.progress
+        }
+    })
+}
