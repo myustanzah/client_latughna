@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,11 +6,12 @@ import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/U
 import { fungsiDataUser } from "../../store/actionCreator";
 
 // api
-import { editUser } from "../../api/userController";
+import { editUser, uploadProfileUser } from "../../api/userController";
+import { url_image } from "../../api/api";
 
 
 export default function CardSettings() {
-  
+  const userPhoto = useRef(null)
   const userLogIn = useSelector(state => state.UserReducer.userData)
   const [inputUserEdit, setInputUserEdit] = useState(userLogIn)
   const dispatch = useDispatch()
@@ -34,15 +35,30 @@ export default function CardSettings() {
     editUser(payload)
     .then((response)=>{
       if(response.data.status === 201){
+        if (userPhoto.current.files[0]) {
+          let payload = {
+              id: userLogIn.id,
+              file: userPhoto.current.files[0]
+          }
+          uploadProfileUser(payload)
+          .then((response)=>{
+              console.log(response)
+              dispatch(fungsiDataUser(response.data.content.imgProfil))
+          })
+          .catch((error)=>{
+              console.log(error)
+          })
+        } else {
+          dispatch(fungsiDataUser(response.data.content))
+        }
         UniversalSuccessResponse("Success", "Update Sukses")
-        dispatch(fungsiDataUser(response.data.content))
       } else {
         UniversalErrorResponse("Error", JSON.stringify(response.data))
       }
     })
     .catch((error)=>{
       if (error.response === undefined) {
-        UniversalErrorResponse(503, "Your interner or server has offline")
+        UniversalErrorResponse(503, "Your internet or server has offline")
       }
       UniversalErrorResponse(error.response.data.status, error.response.data.messages)
     })
@@ -61,6 +77,18 @@ export default function CardSettings() {
             <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
               User Information
             </h6>
+            <div className="w-full h-auto flex flex-row items-center">
+              <div className="w-40 h-40 bg-white mb-6 flex items-center">
+                      {
+                          !userLogIn.imgProfil ? (
+                              <img src={require('../../assets/Profile-Male-PNG.png')} alt="profil" />
+                          ) : (
+                              <img src={`${url_image}/user/${userLogIn.imgProfil}`} alt="profil" />
+                          )
+                      }
+                  </div>
+                  <input ref={userPhoto} name="file_upload" type="file" className="rounded m-10"/>
+            </div>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 px-4">
                 <div className="relative w-full mb-3">

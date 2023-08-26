@@ -1,14 +1,21 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { dateFormat } from "../../helper/handleDate"
 import HeaderReport from "../Header/HeaderReport"
 
 export default function Reporting(){
-    const students = useSelector(state => state.StudentReducer.studentData)
+    const studentsData = useSelector(state => state.StudentReducer.studentData)
+    const [students, setStudentFilter] = useState([])
     const showTypeReport = JSON.parse(localStorage.getItem("generate_report"))
     useEffect(()=>{
-        // window.print()
-    })
+        setStudentFilter([
+            ...students,
+            studentsData[showTypeReport.select_student]
+        ])
+        window.print()
+    }, [])
+
+    console.log(showTypeReport)
 
     function renderTableHead(){
         if (showTypeReport.name_report === 'learning_objective_report') {

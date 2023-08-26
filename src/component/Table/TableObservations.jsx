@@ -127,7 +127,7 @@ function TableObservations() {
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#ModalEditObs"
                                                         className="transition duration-150 ease-in-out">
-                                                        <i className="fa-solid fa-pen-to-square"></i>
+                                                        <i className="fa-solid fa-pen-to-square fa-xl"></i>
                                                     </button>
                                                     <button
                                                         onClick={(c)=>{
@@ -141,7 +141,7 @@ function TableObservations() {
                                                         data-bs-target="#AddComment"
                                                         className="transition duration-150 ease-in-out"
                                                     >
-                                                        <i className="fa-solid fa-comment"></i>
+                                                        <i className="fa-solid fa-comment fa-xl"></i>
                                                     </button>
                                                     
                                                     {/* <button>
@@ -153,7 +153,7 @@ function TableObservations() {
                                                             hendleDeleteObservation(e.id)
                                                         }}
                                                     >
-                                                        <i className="fa-regular fa-trash-can"></i>                                           
+                                                        <i className="fa-regular fa-trash-can fa-xl"></i>                                           
                                                     </button>
                                                 </div>
                                             </td>                                            
@@ -188,14 +188,14 @@ function TableObservations() {
                                                                         })
                                                                     }
                                                                 }>
-                                                                    <i className="fa-solid fa-pen-to-square"></i>
+                                                                    <i className="fa-solid fa-pen-to-square fa-xl"></i>
                                                                 </button>
                                                                 <a href="#" onClick={
                                                                     (i) => {
                                                                         i.preventDefault()
                                                                         handleDeleteComment(c.id)
                                                                     }
-                                                                    }>X</a>
+                                                                    } style={{fontSize: '20px'}}>X</a>
                                                             </td>
                                                         </tr>
                                                     )

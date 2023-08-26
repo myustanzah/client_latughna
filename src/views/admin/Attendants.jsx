@@ -16,45 +16,30 @@ export default function Attendants() {
   const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
   const sessionStudent = useSelector(state => state.StudentReducer.studentData[selectStudent])
   const [fillDate, setFillDate] = useState(null)
-  const [presentAll, setPresentAll] = useState({
-    "present": false,
-    "absent": false,
-    "tardy": false
-  })
+  const [presentAll, setPresentAll] = useState({})
   const [comment, setComment] = useState([])
   const [att, setAtt] = useState([])
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
-function handleSubmit(e, id){
-    
-    let inputAbsen = {
-        present: false,
-        absent: false,
-        tardy: false,
-        comment: ""
-    }
+function handleChecked(e, id){
+    for (let i = 0; i < att.length; i++) {
+        if (att[i].idSession === id) {
+            att[i][e.target.name] = e.target.checked
+        } else {
 
-    
-    if (att.length === 0) {
-        inputAbsen.idSession = id
-        inputAbsen[e.target.name] = e.target.checked
-        
-        att.push(inputAbsen)
-    } else {
-        for (let i = 0; i < att.length; i++) {
-           if (att[i].idSession === id) {
-                att[i][e.target.name] = e.target.checked
-           } else {
-                inputAbsen.idSession = id
-                inputAbsen[e.target.name] = e.target.checked
-                
+            if (presentAll.present === e.target.name) {
+            } else {
+                setPresentAll({
+                    ...presentAll,
+                    idSession: id,
+                    [e.target.name]: e.target.checked
+                })
             }
         }
-        att.push(inputAbsen)
     }
-  }
-
+    att.push(presentAll)
+}
   function handleComment(e, id){
 
     let inputAbsen = {
@@ -81,12 +66,8 @@ function handleSubmit(e, id){
   }
 
   function submitAbsen(){
-
-    setLoading(true)
-    setTimeout(()=>{
-        setLoading(false)
-    }, 5000)
-
+    console.log(att)
+    // setLoading(true)
     //   storeSession(att)
     //   .then((response)=>{
     //         if(response.data.status === 200){
@@ -196,23 +177,23 @@ function handleSubmit(e, id){
                                                                 <>
                                                                     <td className="flex space-x-4 items-center text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                                         <input
-                                                                            defaultChecked={presentAll.present} 
+                                                                            defaultChecked={presentAll.present ? presentAll.present : false} 
                                                                             name="present"
-                                                                            onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                            onChange={(subs)=> handleChecked(subs, e.id)}
                                                                             className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                             type="checkbox" />
                                                                         <label>Present</label>
                                                                         <input 
-                                                                            defaultChecked={presentAll.absent}
+                                                                            defaultChecked={presentAll.absent ? presentAll.absent : false}
                                                                             name="absent"
-                                                                            onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                            onChange={(subs)=> handleChecked(subs, e.id)}
                                                                             className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                             type="checkbox" />
                                                                         <label>Absent</label>
                                                                         <input
-                                                                            defaultChecked={presentAll.tardy}
+                                                                            defaultChecked={presentAll.tardy ? presentAll.tardy : false}
                                                                             name="tardy"
-                                                                            onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                            onChange={(subs)=> handleChecked(subs, e.id)}
                                                                             className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                             type="checkbox" />
                                                                         <label>Tardy</label>
@@ -236,21 +217,21 @@ function handleSubmit(e, id){
                                                                                     <input
                                                                                         defaultChecked={l.present} 
                                                                                         name="present"
-                                                                                        onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                                        onChange={(subs)=> handleChecked(subs, e.id)}
                                                                                         className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                                         type="checkbox" />
                                                                                     <label>Present</label>
                                                                                     <input 
                                                                                         defaultChecked={l.absent}
                                                                                         name="absent"
-                                                                                        onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                                        onChange={(subs)=> handleChecked(subs, e.id)}
                                                                                         className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                                         type="checkbox" />
                                                                                     <label>Absent</label>
                                                                                     <input
                                                                                         defaultChecked={l.tardy} 
                                                                                         name="tardy"
-                                                                                        onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                                        onChange={(subs)=> handleChecked(subs, e.id)}
                                                                                         className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                                         type="checkbox" />
                                                                                     <label>Tardy</label>
@@ -271,21 +252,21 @@ function handleSubmit(e, id){
                                                                                     <input
                                                                                         defaultChecked={presentAll.present} 
                                                                                         name="present"
-                                                                                        onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                                        onChange={(subs)=> handleChecked(subs, e.id)}
                                                                                         className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                                         type="checkbox" />
                                                                                     <label>Present</label>
                                                                                     <input 
                                                                                         defaultChecked={presentAll.absent}
                                                                                         name="absent"
-                                                                                        onChange={(subs)=> handleSubmit(subs, e.id)}
+                                                                                        onChange={(subs)=> handleChecked(subs, e.id)}
                                                                                         className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                                         type="checkbox" />
                                                                                     <label>Absent</label>
                                                                                     <input
                                                                                         defaultChecked={presentAll.tardy}
                                                                                         name="tardy"
-                                                                                        onChange={(subs)=> handleSubmit(subs, e.id)} 
+                                                                                        onChange={(subs)=> handleChecked(subs, e.id)} 
                                                                                         className="form-control rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                                                         type="checkbox" />
                                                                                     <label>Tardy</label>

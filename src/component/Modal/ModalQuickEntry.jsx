@@ -17,24 +17,28 @@ export default function Modal() {
   const dispatch = useDispatch();
     
   function submitQuickEntry(){
-    storeQuickEntry(dataSubmit)
-    .then((response)=>{
-      console.log(response)
-        if(response.data.status === 200){
-          dispatch(fungsiIndexArea())
-          dispatch(fungsiIndexStudent())
-          UniversalSuccessResponse("Success", "Data berhasil ditambahkan")
-        } else {
-          UniversalErrorResponse("Error", JSON.stringify(response.data))
+    if (!dataSubmit.studentId || !dataSubmit.objectiveId || !dataSubmit.comment || !dataSubmit.progress) {
+      UniversalErrorResponse("Error", "Data tidak lengkap")
+    } else {
+      storeQuickEntry(dataSubmit)
+      .then((response)=>{
+        console.log(response)
+          if(response.data.status === 200){
+            dispatch(fungsiIndexArea())
+            dispatch(fungsiIndexStudent())
+            UniversalSuccessResponse("Success", "Data berhasil ditambahkan")
+          } else {
+            UniversalErrorResponse("Error", JSON.stringify(response.data))
+          }
+        
+      })
+      .catch((error)=>{
+        if (error.response === undefined) {
+          UniversalErrorResponse(503, "Your internet or server has offline")
         }
-      
-    })
-    .catch((error)=>{
-      if (error.response === undefined) {
-        UniversalErrorResponse(503, "Your internet or server has offline")
-      }
-      UniversalErrorResponse(error.response.data.status, error.response.data.messages)
-    })
+        UniversalErrorResponse(error.response.data.status, error.response.data.messages)
+      })
+    }
   }
 
   function handleProgress(e){
@@ -112,9 +116,11 @@ export default function Modal() {
                           <select className="w-64 mb-10 form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
                           {
                             areas.areaData.map((area, i) => {
-                              return(
-                                <option key={area.id} value={area.id} onClick={ () => { setSelectArea(i) }}>{area.name}</option>
-                              )
+                              if (area.hide !== true) {
+                                return(
+                                  <option key={area.id} value={area.id} onClick={ () => { setSelectArea(i) }}>{area.name}</option>
+                                )
+                              }
                             })
                           }
                           </select>
@@ -128,9 +134,11 @@ export default function Modal() {
                           <select className="w-64 mb-10 form-select appearance-none min-w-min rounded block px-1 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="" id="">
                             {
                               areas.areaData[selectArea].Objectives.map((obj) => {
-                                return(
-                                  <option key={obj.id} value={obj.id} onClick={() => setDataSubmit({ ...dataSubmit, objectiveId: obj.id })} >{obj.name}</option>
-                                )
+                                if (obj.hide !== true) {
+                                  return(
+                                    <option key={obj.id} value={obj.id} onClick={() => setDataSubmit({ ...dataSubmit, objectiveId: obj.id })} >{obj.name}</option>
+                                  )
+                                }
                               })
                             }
                             </select>

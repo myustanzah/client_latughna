@@ -7,8 +7,10 @@ import { UniversalErrorResponse, UniversalSuccessResponse } from '../../../helpe
 import { fungsiAddContact, fungsiIndexStudent } from '../../../store/actionCreator'
 import { url_image } from '../../../api/api'
 import { useEffect } from 'react'
+import Loading from '../../Modal/Loading'
 
 export default function FormStudent({isStudent, setIsStudent}) {
+    const [loading, setLoading] = useState(false)
     const studentsData = useSelector(state => state.StudentReducer.studentData)
     const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
     const studentPhoto = useRef(null)
@@ -38,8 +40,18 @@ export default function FormStudent({isStudent, setIsStudent}) {
         })
     }
 
+    function handleLoading(){
+        if(!loading){
+            <></>
+        } else {
+            return (
+                <Loading></Loading>
+            )
+        }
+    }
+
     function handleSubmitEditStudent(){
-        
+        setLoading(true)
         let payload = {
             id: studentsData[selectStudent].id,
             data: inputEditStudent
@@ -74,7 +86,10 @@ export default function FormStudent({isStudent, setIsStudent}) {
             UniversalErrorResponse(error.response.data.status, error.response.data.messages)
         })
         .finally(()=>{
-            window.location.reload();
+            setTimeout(()=>{
+                setLoading(false)
+                window.location.reload();
+            }, 3000)
         })
     }
 
@@ -212,6 +227,7 @@ export default function FormStudent({isStudent, setIsStudent}) {
                 </div>
 
             </div>
+            {handleLoading()}
         </div>
     )
 }
