@@ -10,6 +10,7 @@ import ModalAddUser from "../Modal/ModalAddUser";
 import { deleteUsers } from "../../api/userController";
 import { UniversalErrorResponse, UniversalSuccessResponse } from "../../helper/UniversalResponse";
 import { fungsiIndexUser } from "../../store/actionCreator";
+import { url_image } from "../../api/api";
 
 
 export default function CardTable({ color }) {
@@ -172,11 +173,13 @@ export default function CardTable({ color }) {
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <div className="flex">
-                            <img
-                              src={require("../../assets/img/team-1-800x800.jpg")}
-                              alt="..."
-                              className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow"
-                            ></img>
+                            {
+                              !e.imgProfil ? (
+                                <img src={require("../../assets/img/team-1-800x800.jpg")} alt="..." className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow"></img>
+                              ) : (
+                                <img src={`${url_image}/user/${e.imgProfil}`} alt="..." className="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow"></img>
+                              )
+                            }
                           </div>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">

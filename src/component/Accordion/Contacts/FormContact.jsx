@@ -7,9 +7,10 @@ import { fungsiIndexStudent, fungsiAddContact } from "../../../store/actionCreat
 // import useFetchCountry from "../../../hooks/fecthCountry"
 import { url_image } from "../../../api/api"
 import { useRef } from "react"
+import Loading from "../../Modal/Loading"
 
 export default function FormContact(){
-
+    const [loading, setLoading] = useState(false)
     const contactPhoto = useRef(null)
     const [showFormContact, setShoeFormContact] = useState(false)
     const [inputContact, setInputContact] = useState({
@@ -53,13 +54,23 @@ export default function FormContact(){
         })
     }
 
+    function handleLoading(){
+        if(!loading){
+            <></>
+        } else {
+            return (
+                <Loading></Loading>
+            )
+        }
+    }
+
     function submitInputContact(e){
+        setLoading(true)
         e.preventDefault()
         let payload = {
             id: studentsData[selectStudent].id,
             data: inputContact
         }
-        console.log(payload)
         addContact(payload)
         .then((response)=>{
             if(response.data.status === 200 || response.data.status === 201){
@@ -70,7 +81,6 @@ export default function FormContact(){
                     }
                     uploadProfileContact(payload)
                     .then((response)=>{
-                        console.log(response)
                         dispatch(fungsiIndexStudent())
                     })
                     .catch((error)=>{
@@ -78,6 +88,7 @@ export default function FormContact(){
                     })
                 }
                 dispatch(fungsiIndexStudent())
+                UniversalSuccessResponse("Success", "Data berhasil diupdate")
             } else {
                 UniversalErrorResponse("Error", JSON.stringify(response.data))
             }
@@ -89,10 +100,11 @@ export default function FormContact(){
             UniversalErrorResponse(error.response.data.status, error.response.data.messages)
         })
         .finally(()=>{
-            window.location.reload()
+            setTimeout(()=>{
+                setLoading(false)
+                window.location.reload()
+            }, 3000)
         })
-        
-
     }
 
     useEffect(()=>{
@@ -417,6 +429,7 @@ export default function FormContact(){
                     >+ Add Contact</button>
                 )
             }
+            {handleLoading()}
         </div>
     )
 }

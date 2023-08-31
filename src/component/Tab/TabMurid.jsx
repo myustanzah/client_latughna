@@ -1,11 +1,13 @@
 import React, {useState} from "react";
-import { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { fungsiIndexArea, fungsiIndexStudent, fungsiSelectObjective, fungsiSelectStudent, fungsiShowDataStudentOrObjective } from "../../store/actionCreator";
+
+import { fungsiSelectObjective, fungsiSelectStudent, fungsiShowDataStudentOrObjective, fungsiStoreStudent } from "../../store/actionCreator";
 
 // Modal
 import ModalAddStudent from "../Modal/ModalAddStudent";
+import { getStudent } from "../../api/studentControler";
+import { UniversalErrorResponse } from "../../helper/UniversalResponse";
 
 const Tabs = () => {
   
@@ -26,6 +28,21 @@ const Tabs = () => {
 
   function handleSelectObjective(value){
     dispatch(fungsiSelectObjective(value))
+  }
+
+  function submitOrderBy(e) {
+    console.log("masuk sini")
+    let order = e.target.value
+    getStudent(order)
+    .then((response)=>{
+      dispatch(fungsiStoreStudent(response.data.content))
+    })
+    .catch((err)=>{
+      if (err.response === undefined) {
+        UniversalErrorResponse(503, "Your interner or server has offline")
+      }
+      UniversalErrorResponse(err.response.data.status, err.response.data.messages)
+    })
   }
   
   return (
@@ -127,10 +144,10 @@ const Tabs = () => {
           </div>
         </div>
               <select className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" name="filterStudent" id="filterStudent">
-                <option value="firstNam">First Name</option>
-                <option value="lastName">Last Name</option>
-                <option value="youngestFirst">Youngest First</option>
-                <option value="oldestFirst">Oldest First</option>
+                <option value="firstName" onClick={submitOrderBy}>First Name</option>
+                <option value="lastName" onClick={submitOrderBy}>Last Name</option>
+                <option value="youngestFirst" onClick={submitOrderBy}>Youngest First</option>
+                <option value="oldestFirst" onClick={submitOrderBy}>Oldest First</option>
               </select>
       </div>
     </>

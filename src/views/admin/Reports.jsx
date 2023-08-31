@@ -4,22 +4,26 @@ import { Link } from "react-router-dom";
 
 // Tab Murid
 import AddFormMurid from "../../component/Tab/AddFormMurid";
-import { handleNewDate } from "../../helper/handleDate";
 import { UniversalErrorResponse } from "../../helper/UniversalResponse";
+import { useSelector } from "react-redux";
 
 
 export default function DataReports() {
 
+  const selectStudent = useSelector(state => state.StudentReducer.selectStudent)
+
   const [learningObjectiveReport, setLearningObjectiveReport] = useState({
     name_report: "learning_objective_report",
     after_date: "",
-    before_date: ""
+    before_date: "",
+    select_student: selectStudent
   })
 
   const [observationReport, setObservatiobReport] = useState({
     name_report: "observation_report",
     after_date: "",
-    before_date: ""
+    before_date: "",
+    select_student: selectStudent
   })
 
   function handleInputGenerateReport(e){

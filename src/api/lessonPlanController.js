@@ -72,4 +72,5 @@ export async function storeQuickEntry(payload){
             progress: payload.progress
         }
     })
+    return result
 }

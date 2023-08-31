@@ -1,8 +1,10 @@
 import { useState } from "react";
 // modal
 import { useDispatch, useSelector } from "react-redux"
-import { fungsiGetDataObservation, fungsiSelectStudent } from "../../store/actionCreator"
+import { fungsiGetDataObservation, fungsiSelectStudent, fungsiStoreStudent } from "../../store/actionCreator"
 import ModalAddStudent from "../Modal/ModalAddStudent"
+import { getStudent } from "../../api/studentControler";
+import { UniversalErrorResponse } from "../../helper/UniversalResponse";
 
 
 export default function AddFormMurid(){
@@ -15,6 +17,21 @@ function handleSelectStudent(value){
     dispatch(fungsiSelectStudent(value))
     dispatch(fungsiGetDataObservation())
 }
+
+function submitOrderBy(e) {
+    console.log("masuk sini")
+    let order = e.target.value
+    getStudent(order)
+    .then((response)=>{
+      dispatch(fungsiStoreStudent(response.data.content))
+    })
+    .catch((err)=>{
+      if (err.response === undefined) {
+        UniversalErrorResponse(503, "Your internet or server has offline")
+      }
+      UniversalErrorResponse(err.response.data.status, err.response.data.messages)
+    })
+  }
 
     return (
         <>
@@ -60,10 +77,10 @@ function handleSelectStudent(value){
                         </div>
                         </div>
                         <select className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" name="filterStudent" id="filterStudent">
-                                <option value="firstNam">First Name</option>
-                                <option value="lastName">Last Name</option>
-                                <option value="youngestFirst">Youngest First</option>
-                                <option value="oldestFirst">Oldest First</option>
+                                <option value="firstName" onClick={submitOrderBy}>First Name</option>
+                                <option value="lastName" onClick={submitOrderBy}>Last Name</option>
+                                <option value="youngestFirst" onClick={submitOrderBy}>Youngest First</option>
+                                <option value="oldestFirst" onClick={submitOrderBy}>Oldest First</option>
                         </select>
                     </div>
                 </div>

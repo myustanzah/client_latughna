@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { forwardRef, useEffect } from "react"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { deleteLessonPlan } from "../../../api/lessonPlanController"
@@ -6,8 +6,9 @@ import { dateFormat } from "../../../helper/handleDate"
 import { UniversalErrorResponse, UniversalSuccessResponse } from "../../../helper/UniversalResponse"
 import { fungsiIndexLesson } from "../../../store/actionCreator"
 import Loading from "../../Modal/Loading"
+import style from "./style.css"
 
-export default function Table1(props){
+function Table1(props, ref){
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const seeSelectData = useSelector(state => state.LessonReducer.selectLesson)
@@ -49,7 +50,7 @@ export default function Table1(props){
 
     return (
         <>
-            <div className="tab-pane show active w-full h-auto bg-white p-10" id="tabs-home" role="tabpanel" aria-labelledby="tabs-home-tab">
+            <div ref={ref} className="tab-pane show active w-full h-auto bg-white p-10" id="tabs-home" role="tabpanel" aria-labelledby="tabs-home-tab">
                     <div className="flex flex-col">
                         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -69,7 +70,7 @@ export default function Table1(props){
                                                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                                     Last Update
                                                 </th>
-                                                <th scope="col" className="text-sm font-medium text-gray-900">
+                                                <th scope="col" className="notIncludePrint text-sm font-medium text-gray-900">
                                                     Remove
                                                 </th>
                                             </tr>
@@ -119,7 +120,7 @@ export default function Table1(props){
                                                                                                                     submitDeleteLessonArea(e.id , l.id)
                                                                                                                     }
                                                                                                                 }
-                                                                                                                className="whitespace-nowrap text-sm font-medium pointer-events-auto">
+                                                                                                                className="notIncludePrint whitespace-nowrap text-sm font-medium pointer-events-auto">
                                                                                                                 <a href="#">X</a>
                                                                                                             </td>
                                                                                                         </tr>
@@ -155,3 +156,5 @@ export default function Table1(props){
         </>
     )
 }
+
+export default forwardRef(Table1)

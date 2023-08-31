@@ -1,12 +1,19 @@
 import api from './config'
 
-export async function getStudent(){
+export async function getStudent(payload){
+    let dataPayload = {}
+
+    if(payload){
+        dataPayload.order = payload
+    }
+    
     let result = await api({
         method: 'POST',
         url: '/student/index',
         headers: {
             token: localStorage.getItem('token')
-        }
+        },
+        data: dataPayload
     })
     return result
 }

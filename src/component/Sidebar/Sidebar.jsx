@@ -27,6 +27,60 @@ export default function Sidebar() {
     dispatch(fungsiIndexUser())
   }
 
+  const startHideSidebar = () => {
+    if (checkStudent.length === 0) {
+      return (
+        <></>
+      )
+    } else {
+      return (
+        <>
+          <tr className="items-center hover:bg-sky-700 hover:text-white pl-2">
+            <td>
+              <i className={"fas fa-solid fa-clipboard-user mr-2 text-sm "}></i>{" "}
+            </td>
+            <td>
+              <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/attendant">
+                  Attendance
+              </Link>
+            </td>
+          </tr>
+          <tr className="items-center hover:bg-sky-700 hover:text-white pl-2">
+            <td>
+              <i className={"fas fa-solid fa-graduation-cap mr-2 text-sm "}></i>{" "}
+            </td>
+            <td>
+              <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/student">
+                Students
+              </Link>
+            </td>
+          </tr>
+        </>
+      )
+    }
+  }
+
+  const buttonSuperAdmin = () => {
+    if(userData.email === 'superadmin@mail.com'){
+      return (
+        <tr className="items-center hover:bg-sky-700 hover:text-white pl-2">
+          <td>
+            <i className={"fa-solid fa-user-plus mr-2 text-sm"} ></i>{" "}
+          </td>
+          <td>
+            <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/users" onClick={handleUsers} >
+              Users
+            </Link>
+          </td>
+        </tr>
+      )
+    } else {
+      return (
+        <></>
+      )
+    }
+  }
+
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <>
@@ -105,111 +159,60 @@ export default function Sidebar() {
               Admin Layout Pages
             </h6>
             {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2 pl-2">
-                <Link
-                  className={"text-xs uppercase py-3 font-bold block "}
-                  to="/admin/dashboard"
-                >
-                  <i className={"fas fa-tv mr-2 text-sm "}
-                  ></i>{" "}
+            <table>
+              <tr className="items-center hover:bg-sky-700 hover:text-white pl-2 pl-2">
+                <td>
+                  <i className={"fas fa-tv mr-2 text-sm "}></i>{" "}
+                </td>
+                <td>
+                <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/dashboard">
                   Learning Objective
-                </Link>
-              </li>
-
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                <Link
-                  className={"text-xs uppercase py-3 font-bold block "}
-                  to="/admin/observation"
-                  onClick={setDataObservation}
-                >
-                  <i className={"fas fa-solid fa-tower-observation mr-2 text-sm"}
-                  ></i>{" "}
-                  Observations
-                </Link>
-              </li>
-                    {
-                      checkStudent.length == 0 ? (
-                        <></>
-                      ) : (
-                        <>
-                          <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                            <Link
-                              className={
-                                "text-xs uppercase py-3 font-bold block "}
-                              to="/admin/attendant"
-                            >
-                              <i
-                                className={"fas fa-solid fa-clipboard-user mr-2 text-sm "}
-                              ></i>{" "}
-                              Attendance
-                            </Link>
-                          </li>
-
-                          <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                            <Link
-                              className={"text-xs uppercase py-3 font-bold block "}
-                              to="/admin/student"
-                            >
-                              <i className={"fas fa-solid fa-graduation-cap mr-2 text-sm "}
-                              ></i>{" "}
-                              Students
-                            </Link>
-                          </li>
-                        
-                        </>
-                      )
-                    }
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                <Link
-                  className={"text-xs uppercase py-3 font-bold block "}
-                  to="/admin/report"
-                >
-                  <i
-                    className={"fas fa-solid fa-print mr-2 text-sm "}
-                  ></i>{" "}
-                  Reports
-                </Link>
-              </li>
-
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                <Link
-                  className={"text-xs uppercase py-3 font-bold block "}
-                  to="/admin/lesson"
-                >
+                </Link>  
+                </td>
+              </tr>
+              <tr className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                <td>
+                  <i className={"fas fa-solid fa-tower-observation mr-2 text-sm"}></i>{" "}
+                </td>
+                <td>
+                  <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/observation" onClick={setDataObservation}>
+                    Observations
+                  </Link>
+                </td>
+              </tr>
+              {startHideSidebar()}
+              <tr className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                <td>
+                  <i className={"fas fa-solid fa-print mr-2 text-sm "}></i>{" "}
+                </td>
+                <td>
+                  <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/report">
+                    Reports
+                  </Link>
+                </td>
+              </tr>
+              <tr className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                <td>
                   <i className={"fas fa-solid fa-person-chalkboard mr-2 text-sm"} ></i>{" "}
-                  Lesson Plans
-                </Link>
-              </li>
-
-              <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                <Link
-                  className={"text-xs uppercase py-3 font-bold block "}
-                  to="/admin/myaccount"
-                >
-                  
+                </td>
+                <td>
+                  <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/lesson">
+                    Lesson Plans
+                  </Link>
+                </td>
+              </tr>
+              <tr className="items-center hover:bg-sky-700 hover:text-white pl-2">
+                <td>
                   <i className={"fa-solid fa-user-gear mr-2 text-sm"} ></i>{" "}
-                  My Account
-                </Link>
-              </li>
-                {
-                  userData.email === 'superadmin@mail.com' ? (
-                    <li className="items-center hover:bg-sky-700 hover:text-white pl-2">
-                      <Link
-                        className={"text-xs uppercase py-3 font-bold block "}
-                        to="/admin/users"
-                        onClick={handleUsers}
-                      >
-                        <i className={"fa-solid fa-user-plus mr-2 text-sm"} ></i>{" "}
-                        Users
-                      </Link>
-                    </li>
-                  ) : (
-                    <></>
-                  )
-                }
-            </ul>
+                </td>
+                <td>
+                  <Link className={"text-xs uppercase py-3 font-bold block "} to="/admin/myaccount">
+                    My Account
+                  </Link>
+                </td>
+              </tr>
+              {buttonSuperAdmin()}
+            </table>
             <Link to="/auth">
               <button type="button" onClick={handleLogout} className="absolute bottom-0 mb-2 w-full inline-block px-6 py-2.5 bg-cyan-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                     Log Out

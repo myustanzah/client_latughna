@@ -38,6 +38,28 @@ export async function editUser(payload){
     return result
 }
 
+export async function uploadProfileUser(payload){
+    try {
+        let bodyFormData = new FormData()
+            bodyFormData.append("file_upload",  payload.file)
+
+        const config = {
+            headers: { 
+                'Content-Type': 'multipart/form-data' ,
+                'token': localStorage.getItem('token')
+            },
+
+        }
+
+        let result = await api.post(`/user/edit-foto/${payload.id}`, bodyFormData, config)
+        
+        return result
+        
+    } catch (error) {
+        return error
+    }
+}
+
 export async function deleteUsers(payload){
     let result = await api({
         method: 'POST',

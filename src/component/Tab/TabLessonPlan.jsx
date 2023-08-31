@@ -1,9 +1,10 @@
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import Table1 from "./ChiledTabLesson.jsx/Table1"
 import Table2 from "./ChiledTabLesson.jsx/Table2"
 import Table3 from "./ChiledTabLesson.jsx/Table3"
+import { useReactToPrint } from "react-to-print"
 
 export default function TabLessonPlan(){
 
@@ -11,9 +12,14 @@ export default function TabLessonPlan(){
     // const seeSelectData = useSelector(state => state.LessonReducer.selectLesson)
     // const [dataToTable, setDataToTable] = useState([])
 
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    })
+
     return (
         <>
-            <ul className="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0" id="tabs-tab"
+            <ul className="nav nav-tabs flex justify-between flex-col md:flex-row flex-wrap list-none border-b-0 pl-0" id="tabs-tab"
                 role="tablist">
                 <li className="nav-item active" role="presentation">
                     <a href="#tabs-home" 
@@ -44,9 +50,12 @@ export default function TabLessonPlan(){
                     role="tab"
                     aria-controls="tabs-messages" aria-selected="false">My Plan - Objective</a>
                 </li> */}
+                <li>
+                    <button onClick={handlePrint} className="bg-amber-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-5 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">print</button>
+                </li>
             </ul>
             <div className="tab-content" id="tabs-tabContent">
-                <Table1 data={dataLesson} />
+                <Table1 ref={componentRef} data={dataLesson} />
                 <Table2 />
                 <Table3 />
             </div>
