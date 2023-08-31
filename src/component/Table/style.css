@@ -1,0 +1,15 @@
+@media print {
+    #att-table {
+        padding: 100px 10px 40px 20px;
+    }
+    #nama-murid {
+        display: block;
+    }
+}
+
+@media screen {
+    #nama-murid {
+        display: none;
+    }
+}
+
